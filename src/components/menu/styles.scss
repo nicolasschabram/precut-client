@@ -1,8 +1,5 @@
-$black: #272727;
-$page-background: #E5E5E5;
-
 .menu {
-	background-color: $black;
+	background-color: var(--black);
   flex-basis: 4.15rem;
   padding-top: .5rem;
   padding-bottom: 1rem;

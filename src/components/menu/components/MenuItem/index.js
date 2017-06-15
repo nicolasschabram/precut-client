@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 var classNames = require("classnames");
 
 export default class extends React.PureComponent {
@@ -58,11 +59,11 @@ export default class extends React.PureComponent {
 
     return (
       <li className={itemClass}>
-        <a href={"/#/" + this.props.hash}
-           title={this.props.name}
-           className={linkClass}>
+        <Link to={{ pathname: "/" + this.props.hash }}
+              title={this.props.name}
+              className={linkClass}>
           <Icon {...props}/>{this.props.name}
-        </a>
+        </Link>
       </li>
     );
   }

@@ -1,8 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Menu from "components/Menu";
+
 import "normalize.css";
 import "styles.css";
+
+import Menu from "components/Menu";
 import Projects from "scenes/Projects";
 
 class App extends React.Component {

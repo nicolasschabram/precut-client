@@ -1,7 +1,10 @@
 import React from "react";
+import SearchBar from "components/SearchBar";
 
 export default class extends React.PureComponent {
   render() {
-    return (<p>test</p>);
+    return (
+      <SearchBar />
+    );
   }
 }
