@@ -1,10 +1,18 @@
 import React from "react";
-import Filter from "./filter";
+import Filter from "components/Menu/components/Filter";
+var classNames = require("classnames");
 
 export default class extends React.PureComponent {
   render() {
+    const svgClass = classNames(
+      "menu__icon",
+      "menu__icon--" + this.props.hash, {
+        "menu__icon--active": this.props.isActive
+      }
+    );
+
     return (
-      <svg className="menu__icon  menu__icon--scripts" viewBox="-10 -10 44 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+      <svg className={svgClass} viewBox="-10 -10 44 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
         <g id="Canvas" transform="translate(-23 -1419)">
           <g id="Group">
             <g id="Vector">
@@ -27,7 +35,7 @@ export default class extends React.PureComponent {
             </g>
           </g>
         </g>
-        <Filter hash="scripts" />
+        {this.props.isActive ? <Filter /> : null}
         <defs>
           <path id="scripts__path0_fill" d="M 13.2766 0L 0.510638 0C 0.228766 0 0 0.226013 0 0.505621C 0 0.78523 0.228766 1.01124 0.510638 1.01124L 13.2766 1.01124C 13.5585 1.01124 13.7872 0.78523 13.7872 0.505621C 13.7872 0.226013 13.5585 0 13.2766 0Z" />
           <path id="scripts__path1_fill" d="M 0.510638 1.01124L 5.61702 1.01124C 5.89889 1.01124 6.12766 0.78523 6.12766 0.505621C 6.12766 0.226013 5.89889 0 5.61702 0L 0.510638 0C 0.228766 0 0 0.226013 0 0.505621C 0 0.78523 0.228766 1.01124 0.510638 1.01124Z" />

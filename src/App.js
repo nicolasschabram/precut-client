@@ -1,15 +1,27 @@
 import React from 'react';
-import Menu from "./components/menu/menu";
-import "./App.css";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Menu from "components/Menu";
+import "normalize.css";
+import "styles.css";
+import Projects from "scenes/Projects";
 
 class App extends React.Component {
   render() {
     return (
-      <div className="app">
-        <Menu />
-      </div>
+      <BrowserRouter>
+        <div className="app">
+          <Menu />
+          <main>
+            <Switch>
+              <Route exact path="/projects" component={Projects} />
+            </Switch>
+          </main>
+        </div>
+      </BrowserRouter>
     );
   }
 }
+
+
 
 export default App;

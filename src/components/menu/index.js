@@ -1,6 +1,6 @@
 import React from "react";
-import "./menu.css";
-import MenuItem from "./components/menu-item";
+import "./styles.css";
+import MenuItem from "./components/MenuItem";
 
 export default class extends React.PureComponent {
   render() {
@@ -27,7 +27,7 @@ export default class extends React.PureComponent {
       isBottom: true
     }];
 
-    const pageComponents = pages.map(page => {
+    const Items = pages.map(page => {
       return (<MenuItem name={page.name}
                         key={page.hash}
                         hash={page.hash}
@@ -38,7 +38,7 @@ export default class extends React.PureComponent {
 
     return (
       <nav className="menu">
-        <ul className="menu__list">{pageComponents}</ul>
+        <ul className="menu__list">{Items}</ul>
       </nav>
     );
   };

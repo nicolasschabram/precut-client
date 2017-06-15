@@ -1,4 +1,5 @@
-@import 'colors.scss';
+$black: #272727;
+$page-background: #E5E5E5;
 
 .menu {
 	background-color: $black;
@@ -30,15 +31,6 @@
     .menu__item--bottom,
     .menu__item--active {
       opacity: 1;
-    }
-
-    .menu__item--active {
-      .menu__icon--projects { filter: url(#filter--projects); }
-      .menu__icon--tracks   { filter: url(#filter--tracks); }
-      .menu__icon--tags     { filter: url(#filter--tags); }
-      .menu__icon--boards   { filter: url(#filter--boards); }
-      .menu__icon--scripts  { filter: url(#filter--scripts); }
-      .menu__icon--settings { filter: url(#filter--settings); }
     }
 
     .menu__item--bottom {
@@ -74,4 +66,8 @@
           display: block;
           margin: 0 auto;
           height: 2.8rem;
+        }
+
+        .menu__icon--active {
+          filter: url(#menu-item__icon-filter);
         }
