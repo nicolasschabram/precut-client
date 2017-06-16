@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import PencilIcon from "components/Icon/components/Pencil";
+import BodyRow from "./components/BodyRow";
 import "./styles.css";
 
 export default class extends React.PureComponent {
