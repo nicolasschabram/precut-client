@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-var classNames = require("classnames");
+import classNames from "classnames";
 
 export default class extends React.PureComponent {
   getIcon() {

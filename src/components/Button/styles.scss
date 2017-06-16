@@ -1,0 +1,82 @@
+.button {
+  display: inline-block;
+  color: white;
+  font-size: (14 / 15) + rem;
+  font-weight: 600;
+  font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  border-radius: 4px;
+  border: 0 none;
+  height: (28 / 15) + rem;
+  line-height: ((28 + 2) / 15) + rem;
+  padding: 0 .5rem;
+  cursor: pointer;
+  outline: none;
+
+  // standard: grey
+  background: linear-gradient(180deg, #A0A0A0 0%, #8A8A8A 100%);
+  box-shadow: 0 2px 0 #686868;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(180deg,
+                                darken(#A0A0A0, 10%) 0%,
+                                darken(#8A8A8A, 10%) 100%);
+    box-shadow: 0 2px 0 darken(#686868, 10%);
+  }
+
+  &:active {
+    background: linear-gradient(180deg,
+                                darken(#A0A0A0, 5%) 0%,
+                                darken(#8A8A8A, 5%) 100%);
+    box-shadow: 0 2px 0 darken(#686868, 5%);
+  }
+}
+
+.button--red {
+  background: linear-gradient(180deg, #EB5757 0%, #D95353 95%);
+  box-shadow: 0 2px 0 #B54444;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(180deg,
+                                darken(#EB5757, 10%) 0%,
+                                darken(#D95353, 10%) 95%);
+    box-shadow: 0 2px 0 darken(#B54444, 10%);
+  }
+
+  &:active {
+    background: linear-gradient(180deg,
+                                darken(#EB5757, 5%) 0%,
+                                darken(#D95353, 5%) 95%);
+    box-shadow: 0 2px 0 darken(#B54444, 5%);
+  }
+}
+
+.button--blue {
+  background: linear-gradient(180deg, #34BEF9 0%, #32ADE1 100%);
+  box-shadow: 0 2px 0 #21789C;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(180deg,
+                                darken(#34BEF9, 10%) 1.67%,
+                                darken(#32ADE1, 10%) 100%);
+    box-shadow: 0 2px 0 darken(#21789C, 10%);
+  }
+
+  &:active {
+    background: linear-gradient(180deg,
+                                darken(#34BEF9, 5%) 1.67%,
+                                darken(#32ADE1, 5%) 100%);
+    box-shadow: 0 2px 0 darken(#21789C, 5%);
+  }
+}
+
+.button--small {
+  height: (25 / 15) + rem;
+  line-height: ((25 - 4) / 15) + rem;
+  border: (2 / 15) + rem solid #fff;
+  font-size: (12 / 15) + rem;
+  box-shadow: none;
+  padding: 0 .3rem;
+}

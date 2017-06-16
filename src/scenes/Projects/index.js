@@ -1,10 +1,10 @@
 import React from "react";
-import SearchBar from "components/SearchBar";
+import Fold from "components/Fold";
+import TableView from "components/TableView";
 
 export default class extends React.PureComponent {
   render() {
-    return (
-      <SearchBar />
-    );
+    const content = () => (<TableView location={this.props.location} />);
+    return <Fold content={content} />;
   }
 }

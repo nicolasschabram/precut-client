@@ -1,6 +1,6 @@
 import React from "react";
 import Filter from "components/Menu/components/Filter";
-var classNames = require("classnames");
+import classNames from "classnames";
 
 export default class extends React.PureComponent {
   render() {
