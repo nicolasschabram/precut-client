@@ -16,7 +16,9 @@ export default class extends React.PureComponent {
                      name="search"
                      id="search"
                      placeholder="search projects …"
-                     maxLength="200" />
+                     maxLength="200"
+                     value=""
+              />
               <div className="search-bar__button-wrapper">
                 <button className="search-bar__button"
                       type="submit"

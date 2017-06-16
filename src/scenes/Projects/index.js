@@ -7,6 +7,8 @@ import TableView from "components/TableView";
 import PencilIcon from "components/Icon/components/Pencil";
 import {Link} from "react-router-dom";
 
+import * as actions from "data/projects/actions";
+
 const Projects = class extends React.PureComponent {
 
   getTableColumns() {
@@ -42,14 +44,19 @@ const Projects = class extends React.PureComponent {
     ];
   }
 
-  getTableData(projects) {
+  getTableData(projects, check) {
     return projects.map(function(project) {
+      const checkProp = project.get("isChecked") ? { checked: "checked"} : {}
       return {
         id: project.get("id"),
         cells: [
 
           // Checkbox
-          <input type="checkbox" />,
+          <input value={project.get("id") + "--selected"}
+                 type="checkbox"
+                 {...checkProp}
+                 onChange={() => check(project.get("id"))}
+          />,
 
           // Name + Pencil
           (
@@ -93,7 +100,7 @@ const Projects = class extends React.PureComponent {
     const content = () => (
       <TableView location={this.props.location}
                  columns={this.getTableColumns(this.props.projects)}
-                 data={this.getTableData(this.props.projects)}
+                 data={this.getTableData(this.props.projects, this.props.check)}
       />
     );
     return <Fold content={content} />;
@@ -107,4 +114,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Projects);
+export default connect(mapStateToProps, actions)(Projects);

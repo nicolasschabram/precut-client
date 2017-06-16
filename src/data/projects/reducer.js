@@ -1,4 +1,4 @@
-import { ADD } from "./actions";
+import { ADD, CHECK } from "./actions";
 import { fromJS } from "immutable"
 
 const initialState = fromJS([
@@ -38,6 +38,20 @@ export function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD: {
       return state.merge(action.payload);
+    }
+    case CHECK: {
+      function matchesProjectId(project) {
+        return project.get("id") === action.projectId;
+      }
+
+      const index = state.findIndex(matchesProjectId);
+
+      return state.updateIn(
+        [index, "isChecked"],
+        isChecked => {
+          return !isChecked;
+        }
+      );
     }
     default:
       return state;
