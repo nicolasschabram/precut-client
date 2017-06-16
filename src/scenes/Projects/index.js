@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import Fold from "components/Fold";
 import TableView from "components/TableView";
 
-import { getProjectCount } from "data/projects/reducer"
+import {getProjectCount} from "data/projects/reducer"
 
 const Projects = class extends React.PureComponent {
   render() {
