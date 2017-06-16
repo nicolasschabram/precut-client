@@ -7,7 +7,10 @@ export default class extends React.PureComponent {
     return (
       <div>
         <MetaBar location={this.props.location} />
-        <Table style={{marginTop: "1rem"}} />
+        <Table style={{marginTop: "1rem"}}
+               items={this.props.items}
+               itemCount={this.props.itemCount}
+        />
       </div>
     )
   }

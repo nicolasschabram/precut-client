@@ -7,53 +7,12 @@ export default class extends React.PureComponent {
     console.log("pencil clicked");
     return false;
   }
+  renderBodyRows(items) {
+    return items.map(item => (
+      <BodyRow item={item} key={item.get("id")} handleClick={() => this.handleClick()} />
+    ));
+  }
   render() {
-    const BodyRow = () => (
-      <tr className="table__row--body">
-
-        <td className="table__cell  table__cell--center  table__cell--body">
-          <input type="checkbox" />
-        </td>
-
-        <td className="table__cell  table__cell--left  table__cell--body">
-          <Link to={{ pathname: "/project/45ggt24" }}>
-            A random project STIFT-SYMBOL
-          </Link>
-          <PencilIcon
-            style={{
-              height: ".9rem",
-              color: "var(--black)",
-              marginLeft: ".75rem",
-              marginBottom: "-.1rem",
-              cursor: "pointer"
-            }}
-            onClick={() => this.handleClick()}
-          />
-        </td>
-
-        <td className="table__cell  table__cell--right  table__cell--body">
-          3
-        </td>
-
-        <td className="table__cell  table__cell--right  table__cell--body">
-          43
-        </td>
-
-        <td className="table__cell  table__cell--right  table__cell--body">
-          10
-        </td>
-
-        <td className="table__cell  table__cell--right  table__cell--body">
-          5
-        </td>
-
-        <td className="table__cell  table__cell--left  table__cell--body">
-          yesterday
-        </td>
-
-      </tr>
-    );
-
     return (
       <table className="table" style={this.props.style}>
         <thead className="table__head">
@@ -70,13 +29,7 @@ export default class extends React.PureComponent {
           </tr>
         </thead>
         <tbody className="table__body">
-          <BodyRow />
-          <BodyRow />
-          <BodyRow />
-          <BodyRow />
-          <BodyRow />
-          <BodyRow />
-          <BodyRow />
+          {this.renderBodyRows(this.props.items)}
         </tbody>
       </table>
     )
