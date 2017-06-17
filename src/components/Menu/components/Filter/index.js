@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class extends React.PureComponent {
+export default class Filter extends React.PureComponent {
   render() {
     return (
       <filter id="menu-item__icon-filter">

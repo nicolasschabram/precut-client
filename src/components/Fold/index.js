@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.css";
 
-export default class extends React.PureComponent {
+export default class Fold extends React.PureComponent {
   render() {
     return (
       <section className="fold">

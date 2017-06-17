@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class extends React.PureComponent {
+export default class SearchIcon extends React.PureComponent {
 	render() {
     return (
       <svg className="search-bar__search-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.966 52.966">

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class extends React.PureComponent {
+export default class Pencil extends React.PureComponent {
   render() {
     return (
       <svg style={this.props.style} onClick={this.props.onClick} version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 55.25 55.25">

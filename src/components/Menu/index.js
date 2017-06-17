@@ -1,8 +1,8 @@
 import React from "react";
 import "./styles.css";
-import MenuItem from "./components/MenuItem";
+import Item from "./components/Item";
 
-export default class extends React.PureComponent {
+export default class Menu extends React.PureComponent {
   render() {
     const pages = [{
       name: "Projects",

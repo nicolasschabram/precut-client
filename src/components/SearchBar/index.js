@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.css";
 import SearchIcon from "./components/SearchIcon";
 
-export default class extends React.PureComponent {
+export default class SearchBar extends React.PureComponent {
   render() {
     return (
       <section role="search" className="search-bar">

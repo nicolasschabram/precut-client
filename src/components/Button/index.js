@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.css";
 import classNames from "classnames";
 
-export default class extends React.PureComponent {
+export default class Button extends React.PureComponent {
   render() {
     const buttonClass = classNames(
       "button", {
