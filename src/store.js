@@ -1,18 +1,12 @@
 import { createStore } from "redux";
-import { combineReducers } from "redux-immutable";
 import { Map } from "immutable";
 
-import { reducer as dataReducer } from "./data/reducer";
-import routingReducer from "./reducer";
+import { reducer } from "./data/reducer";
 
 const initialState = Map();
-const appReducer = combineReducers({
-  routing: routingReducer,
-  data: dataReducer
-});
 
 export default createStore(
-  appReducer,
+  reducer,
   initialState,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
