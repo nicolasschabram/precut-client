@@ -112,6 +112,10 @@ const Projects = class extends React.PureComponent {
     );
     return <Fold content={content} />;
   }
+
+  componentWillUnmount() {
+    this.props.resetSelection();
+  }
 }
 
 function mapStateToProps(state) {
