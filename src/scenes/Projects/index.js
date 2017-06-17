@@ -11,7 +11,6 @@ import * as projectActions from "data/projects/actions";
 import * as tableViewActions from "data/ui/table_view/actions";
 
 const Projects = class extends React.PureComponent {
-
   getTableColumns() {
     return [
       // {
