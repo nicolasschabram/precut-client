@@ -120,9 +120,9 @@ const Projects = class extends React.PureComponent {
 
 function mapStateToProps(state) {
   return {
-    projects: state.getIn(["data", "projects"]),
-    selectedProjects: state.getIn(["data", "ui", "table_view", "selectedKeys"]),
-    allSelected: !!state.getIn(["data", "ui", "table_view", "allSelected"])
+    projects: state.get("projects"),
+    selectedProjects: state.getIn(["ui", "table_view", "selectedKeys"]),
+    allSelected: !!state.getIn(["ui", "table_view", "allSelected"])
   };
 }
 
