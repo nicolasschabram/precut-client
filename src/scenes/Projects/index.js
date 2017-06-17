@@ -7,16 +7,17 @@ import TableView from "components/TableView";
 import PencilIcon from "components/Icon/components/Pencil";
 import {Link} from "react-router-dom";
 
-import * as actions from "data/projects/actions";
+import * as projectActions from "data/projects/actions";
+import * as tableViewActions from "data/ui/table_view/actions";
 
 const Projects = class extends React.PureComponent {
 
   getTableColumns() {
     return [
-      {
-        title: <input type="checkbox" />,
-        textAlign: "center"
-      },
+      // {
+      //   title: <input type="checkbox" />,
+      //   textAlign: "center"
+      // },
       {
         title: "Name",
         textAlign: "left"
@@ -46,17 +47,16 @@ const Projects = class extends React.PureComponent {
 
   getTableData(projects, check) {
     return projects.map(function(project) {
-      const checkProp = project.get("isChecked") ? { checked: "checked"} : {}
       return {
         id: project.get("id"),
         cells: [
 
           // Checkbox
-          <input value={project.get("id") + "--selected"}
-                 type="checkbox"
-                 {...checkProp}
-                 onChange={() => check(project.get("id"))}
-          />,
+          //<input value={project.get("id") + "--selected"}
+          //       type="checkbox"
+          //       checked={!!project.get("isChecked")}
+          //       onChange={() => check(project.get("id"))}
+          ///>,
 
           // Name + Pencil
           (
@@ -101,6 +101,14 @@ const Projects = class extends React.PureComponent {
       <TableView location={this.props.location}
                  columns={this.getTableColumns(this.props.projects)}
                  data={this.getTableData(this.props.projects, this.props.check)}
+                 checkbox={true}
+                 selectedItems={this.props.selectedProjects}
+                 allSelected={this.props.allSelected}
+                 toggleSelect={this.props.toggleSelect}
+                 toggleSelectAll={this.props.toggleSelectAll}
+                 resetSelection={this.props.resetSelection}
+                 keys={this.props.projects.map(project => project.get("id"))}
+                 itemType={["Project", "Projects"]}
       />
     );
     return <Fold content={content} />;
@@ -109,9 +117,13 @@ const Projects = class extends React.PureComponent {
 
 function mapStateToProps(state) {
   return {
-    projects: state.get("projects")
-    //itemCount: getProjectCount(state.get("projects"))
+    projects: state.getIn(["data", "projects"]),
+    selectedProjects: state.getIn(["data", "ui", "table_view", "selectedKeys"]),
+    allSelected: !!state.getIn(["data", "ui", "table_view", "allSelected"])
   };
 }
 
-export default connect(mapStateToProps, actions)(Projects);
+export default connect(
+  mapStateToProps,
+  { ...tableViewActions, ...projectActions}
+)(Projects);

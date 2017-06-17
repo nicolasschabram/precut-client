@@ -2,13 +2,13 @@ import { createStore } from "redux";
 import { combineReducers } from "redux-immutable";
 import { Map } from "immutable";
 
-import { reducer as projectsReducer } from "./data/projects/reducer";
+import { reducer as dataReducer } from "./data/reducer";
 import routingReducer from "./reducer";
 
 const initialState = Map();
 const appReducer = combineReducers({
   routing: routingReducer,
-  projects: projectsReducer
+  data: dataReducer
 });
 
 export default createStore(
