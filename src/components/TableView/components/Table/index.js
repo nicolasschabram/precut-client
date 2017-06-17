@@ -1,16 +1,21 @@
 import React from "react";
+import {connect} from "react-redux";
 import classNames from "classnames";
+
 import "./styles.css";
+import * as tableViewActions from "data/ui/table_view/actions";
 
-export default class Table extends React.PureComponent {
+class Table extends React.PureComponent {
 
-  renderHeadCells(cells, allSelected, toggleSelectAll, keys) {
+  renderHeadCells(cells, allSelected, toggleSelectAll, items) {
     const checkbox = (
       <th className="table__cell  table__cell--head  table__cell--center">
         <input value="selectAll"
                type="checkbox"
                checked={allSelected}
-               onChange={() => toggleSelectAll(keys)}
+               onChange={() => toggleSelectAll(
+                 items.map(item => item.get("id"))
+               )}
                className="table__checkbox"
         />
       </th>
@@ -83,16 +88,16 @@ export default class Table extends React.PureComponent {
       <table className="table" style={this.props.style}>
         <thead className="table__head">
           {this.renderHeadCells(
-            this.props.columns,
+            this.props.tableHead,
             this.props.allSelected,
             this.props.toggleSelectAll,
-            this.props.keys
+            this.props.items
           )}
         </thead>
         <tbody className="table__body">
           {this.renderBodyRows(
-            this.props.data,
-            this.props.columns,
+            this.props.tableBody,
+            this.props.tableHead,
             this.props.toggleSelect,
             this.props.selectedItems
           )}
@@ -101,3 +106,13 @@ export default class Table extends React.PureComponent {
     )
   }
 }
+
+
+function mapStateToProps(state) {
+  return {
+    selectedItems: state.getIn(["ui", "table_view", "selectedKeys"]),
+    allSelected: !!state.getIn(["ui", "table_view", "allSelected"])
+  };
+}
+
+export default connect(mapStateToProps, tableViewActions)(Table);

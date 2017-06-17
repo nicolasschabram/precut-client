@@ -7,19 +7,15 @@ export default class TableView extends React.PureComponent {
     return (
       <div>
         <MetaBar location={this.props.location}
-                 selectedItems={this.props.selectedItems}
                  itemType={this.props.itemType}
+                 items={this.props.items}
+                 moveToTrash={this.props.moveToTrash}
         />
         <Table style={{marginTop: "1rem"}}
-               columns={this.props.columns}
-               data={this.props.data}
-               checkbox={true}
-               selectedItems={this.props.selectedItems}
-               allSelected={this.props.allSelected}
-               toggleSelect={this.props.toggleSelect}
-               toggleSelectAll={this.props.toggleSelectAll}
-               resetSelection={this.props.resetSelection}
-               keys={this.props.keys}
+               tableHead={this.props.tableHead}
+               tableBody={this.props.tableBody}
+               checkbox={this.props.checkbox}
+               items={this.props.items}
         />
       </div>
     )

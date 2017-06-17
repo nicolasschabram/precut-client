@@ -1,6 +1,6 @@
 import React from "react";
-import {connect} from "react-redux";
 import moment from "moment";
+import {connect} from "react-redux";
 
 import Fold from "components/Fold";
 import TableView from "components/TableView";
@@ -8,15 +8,10 @@ import PencilIcon from "components/Icon/components/Pencil";
 import {Link} from "react-router-dom";
 
 import * as projectActions from "data/projects/actions";
-import * as tableViewActions from "data/ui/table_view/actions";
 
 const Projects = class extends React.PureComponent {
-  getTableColumns() {
+  getTableHead() {
     return [
-      // {
-      //   title: <input type="checkbox" />,
-      //   textAlign: "center"
-      // },
       {
         title: "Name",
         textAlign: "left"
@@ -44,37 +39,27 @@ const Projects = class extends React.PureComponent {
     ];
   }
 
-  getTableData(projects, check) {
+  getTableBody(projects) {
     return projects.map(function(project) {
       return {
         id: project.get("id"),
         cells: [
 
-          // Checkbox
-          //<input value={project.get("id") + "--selected"}
-          //       type="checkbox"
-          //       checked={!!project.get("isChecked")}
-          //       onChange={() => check(project.get("id"))}
-          ///>,
-
-          // Name + Pencil
-          (
-            <div>
-              <Link to={{ pathname: "/project/" + project.get("id") }}>
-                {project.get("name")}
-              </Link>
-              <PencilIcon
-                style={{
-                  height: ".9rem",
-                  color: "var(--black)",
-                  marginLeft: ".75rem",
-                  marginBottom: "-.1rem",
-                  cursor: "pointer"
-                }}
-                onClick={() => console.log("pencil icon clicked")}
-              />
-            </div>
-          ),
+          (<div>
+            <Link to={{ pathname: "/project/" + project.get("id") }}>
+              {project.get("name")}
+            </Link>
+            <PencilIcon
+              style={{
+                height: ".9rem",
+                color: "var(--black)",
+                marginLeft: ".75rem",
+                marginBottom: "-.1rem",
+                cursor: "pointer"
+              }}
+              onClick={() => console.log("pencil icon clicked")}
+            />
+          </div>),
 
           // Track Count
           project.get("tracks").count(),
@@ -98,16 +83,14 @@ const Projects = class extends React.PureComponent {
   render() {
     const content = () => (
       <TableView location={this.props.location}
-                 columns={this.getTableColumns(this.props.projects)}
-                 data={this.getTableData(this.props.projects, this.props.check)}
+                 items={this.props.projects}
+                 tableHead={this.getTableHead()}
+                 tableBody={this.getTableBody(
+                   this.props.projects.filter(project => !project.get("inTrash"))
+                 )}
                  checkbox={true}
-                 selectedItems={this.props.selectedProjects}
-                 allSelected={this.props.allSelected}
-                 toggleSelect={this.props.toggleSelect}
-                 toggleSelectAll={this.props.toggleSelectAll}
-                 resetSelection={this.props.resetSelection}
-                 keys={this.props.projects.map(project => project.get("id"))}
                  itemType={["Project", "Projects"]}
+                 moveToTrash={this.props.moveProjectsToTrash}
       />
     );
     return <Fold content={content} />;
@@ -120,13 +103,8 @@ const Projects = class extends React.PureComponent {
 
 function mapStateToProps(state) {
   return {
-    projects: state.get("projects"),
-    selectedProjects: state.getIn(["ui", "table_view", "selectedKeys"]),
-    allSelected: !!state.getIn(["ui", "table_view", "allSelected"])
+    projects: state.get("projects")
   };
 }
 
-export default connect(
-  mapStateToProps,
-  { ...tableViewActions, ...projectActions}
-)(Projects);
+export default connect(mapStateToProps, projectActions)(Projects);

@@ -1,4 +1,4 @@
-import { ADD } from "./actions";
+import { MOVE_TO_TRASH } from "./actions";
 import { fromJS } from "immutable"
 
 const initialState = fromJS([
@@ -18,7 +18,8 @@ const initialState = fromJS([
     id: "adasasdf",
     name: "Project 3",
     lastModified: new Date(2017, 5, 14, 17, 25),
-    tracks: []
+    tracks: [],
+    inTrash: true
   },
   {
     id: "asdf7sge",
@@ -37,19 +38,17 @@ const initialState = fromJS([
 export function reducer(state = initialState, action) {
   switch (action.type) {
 
-    case ADD: {
-      return state.merge(action.payload);
+    case MOVE_TO_TRASH: {
+      let newState = state;
+      action.ids.map(id =>
+        state.findIndex(project => id === project.get("id"))
+      ).forEach(index =>
+        newState = newState.setIn([index, "inTrash"], true)
+      );
+      return newState;
     }
 
     default:
       return state;
   }
 }
-
-// export function getProjectNames(state) {
-//   return state.projects.map(project => project.name);
-// };
-
-// export function getTrackCount(state) {
-//   return state.count();
-// }

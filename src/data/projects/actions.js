@@ -1,25 +1,9 @@
 export const ADD = "projects/add";
-export const TOGGLE_CHECK = "projects/toggle-check";
-export const TOGGLE_CHECK_ALL = "projects/toggle-check-all";
+export const MOVE_TO_TRASH = "projects/move-to-trash"
 
-export function add(payload) {
-  return (
-    payload.name && ({
-      type: ADD,
-      payload
-    })
-  );
-}
-
-export function toggleCheck(projectId) {
+export function moveProjectsToTrash(ids) {
   return {
-    type: TOGGLE_CHECK,
-    projectId
+    type: MOVE_TO_TRASH,
+    ids: ids
   };
-}
-
-export function toggleCheckAll() {
-  return {
-    type: TOGGLE_CHECK_ALL
-  }
 }
