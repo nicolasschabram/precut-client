@@ -28,7 +28,7 @@ export default class Menu extends React.PureComponent {
     }];
 
     const Items = pages.map(page => {
-      return (<MenuItem name={page.name}
+      return (<Item name={page.name}
                         key={page.hash}
                         hash={page.hash}
                         isTop={!!page.isTop}
