@@ -11,6 +11,7 @@ export default class Table extends React.PureComponent {
                type="checkbox"
                checked={allSelected}
                onChange={() => toggleSelectAll(keys)}
+               className="table__checkbox"
         />
       </th>
     );
@@ -46,6 +47,7 @@ export default class Table extends React.PureComponent {
                  type="checkbox"
                  checked={selectedItems.includes(row.id)}
                  onChange={() => toggleSelect(row.id, rows.count())}
+                 className="table__checkbox"
           />
         </td>
       );
