@@ -26,8 +26,8 @@ export function reducer(state = initialState, action) {
         newState.set("selectedKeys", Set());
     }
     case RESET_SELECTION: {
-      return state.delete("allSelected")
-                  .delete("selectedKeys");
+      return state.set("selectedKeys", Set())
+                  .set("allSelected", false );
     }
     default: return state;
   }
