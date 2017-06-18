@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {connect} from "react-redux";
 
 import Button from "components/Button";
+import Form from "components/Form";
 
 import * as modalActions from "data/ui/modal/actions";
 
@@ -51,6 +52,8 @@ class Modal extends React.PureComponent {
           <div className="dialog__content-container">
             <p>Are you sure you want to move 1 script to trash? This won’t affect your soundbites in other areas of the app.Are you sure you want to move 1 script to trash? This won’t affect your soundbites in other areas of the app.Are you sure you want to move 1 script to trash? This won’t affect your soundbites in other areas of the app.Are you sure you want to move 1 script to trash? This won’t affect your soundbites in other areas of the app.Are you sure you want to move 1 script to trash? This won’t affect your soundbites in other areas of the app.</p>
             <p>Are you sure you want to move 1 script to trash? This won’t affect your soundbites in other areas of the app.</p>
+
+            <Form />
           </div>
           <div className="dialog__action-container">
             {this.renderButtons(this.props.buttons)}
