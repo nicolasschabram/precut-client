@@ -4,7 +4,7 @@ import SearchBar from "components/SearchBar";
 import Button from "components/Button";
 import { Link } from "react-router-dom";
 import "./styles.css";
-import * as tableViewActions from "data/projects/actions";
+import * as modalActions from "data/ui/modal/actions";
 
 class MetaBar extends React.PureComponent {
   getButtonText(itemType, selectedItemCount) {
@@ -15,12 +15,12 @@ class MetaBar extends React.PureComponent {
   render() {
     return (
       <div className="meta-bar">
-        <SearchBar />
+        <SearchBar itemType={this.props.itemType} />
         { this.props.selectedKeys.count() ?
           <Button buttonText={this.getButtonText(this.props.itemType,
                                                  this.props.selectedKeys.count())}
                   color="red"
-                  onClick={() => this.props.moveToTrash(
+                  onClick={() => this.props.moveItemsToTrash(
                     this.props.selectedKeys
                   )}
           /> :
@@ -34,7 +34,7 @@ class MetaBar extends React.PureComponent {
         </Link>
         <Button buttonText={"New " + this.props.itemType[0]}
                 color="blue"
-                onClick={console.log("new project clicked")}
+                onClick={() => this.props.showModal()}
                 style={{float: "right"}}
         />
       </div>
@@ -48,4 +48,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, tableViewActions)(MetaBar);
+export default connect(mapStateToProps, modalActions)(MetaBar);

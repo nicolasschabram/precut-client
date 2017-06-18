@@ -32,6 +32,10 @@
   }
 }
 
+.button ~ .button {
+  margin-left: .5rem;
+}
+
 .button--red {
   background: linear-gradient(180deg, #EB5757 0%, #D95353 95%);
   box-shadow: 0 2px 0 #B54444;

@@ -33,7 +33,7 @@ const Projects = class extends React.PureComponent {
         textAlign: "right"
       },
       {
-        title: "LastModified",
+        title: "Last Modified",
         textAlign: "left"
       }
     ];
@@ -90,7 +90,15 @@ const Projects = class extends React.PureComponent {
                  )}
                  checkbox={true}
                  itemType={["Project", "Projects"]}
-                 moveToTrash={this.props.moveProjectsToTrash}
+                 moveItemsToTrash={this.props.moveToTrash}
+
+                 modalButtons={[{
+                   text: "Create Project",
+                   color: "blue",
+                   submit: true,
+                   onClick: () => console.log("click"),
+                   align: "right"
+                 }]}
       />
     );
     return <Fold content={content} />;
