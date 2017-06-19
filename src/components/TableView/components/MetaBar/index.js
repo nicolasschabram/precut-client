@@ -3,8 +3,11 @@ import {connect} from "react-redux";
 import SearchBar from "components/SearchBar";
 import Button from "components/Button";
 import { Link } from "react-router-dom";
+
 import "./styles.css";
+
 import * as modalActions from "data/ui/modal/actions";
+import * as tableViewActions from "data/ui/table_view/actions";
 
 class MetaBar extends React.PureComponent {
   getButtonText(itemType, selectedItemCount) {
@@ -20,9 +23,12 @@ class MetaBar extends React.PureComponent {
           <Button buttonText={this.getButtonText(this.props.itemType,
                                                  this.props.selectedKeys.count())}
                   color="red"
-                  onClick={() => this.props.moveItemsToTrash(
-                    this.props.selectedKeys
-                  )}
+                  onClick={() => {
+                    this.props.moveItemsToTrash(
+                      this.props.selectedKeys
+                    );
+                    this.props.resetSelection();
+                  }}
           /> :
           null
         }
@@ -48,4 +54,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, modalActions)(MetaBar);
+export default connect(
+  mapStateToProps,
+  {...modalActions, ...tableViewActions}
+)(MetaBar);
