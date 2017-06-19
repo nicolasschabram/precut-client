@@ -124,8 +124,6 @@ class Table extends React.PureComponent {
 
     tableBody = this.props.sortBy.get("order") === "ASC" ? tableBody : tableBody.reverse();
 
-    console.log(this.props.tableBody);
-
     return (
       <table className="table" style={this.props.style}>
         <thead className="table__head">
