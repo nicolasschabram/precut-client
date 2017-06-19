@@ -14,7 +14,7 @@ export default class Button extends React.PureComponent {
     );
     return (
       <button className={buttonClass}
-              onClick={() => this.props.onClick()}
+              onClick={this.props.onClick ? () => this.props.onClick() : null}
               style={this.props.style}
               type={this.props.submit ? "submit" : "button"}
       >

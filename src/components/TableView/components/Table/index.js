@@ -7,7 +7,11 @@ import * as tableViewActions from "data/ui/table_view/actions";
 
 class Table extends React.PureComponent {
 
-  renderHeadCells(cells, allSelected, toggleSelectAll, items) {
+  componentDidMount() {
+    this.props.sortTable();
+  }
+
+  renderHeadCells(cells, allSelected, toggleSelectAll, items, sortTable, sortBy) {
     const checkbox = (
       <th className="table__cell  table__cell--head  table__cell--center">
         <input value="selectAll"
@@ -25,13 +29,28 @@ class Table extends React.PureComponent {
       const cellClass = classNames(
         "table__cell",
         "table__cell--head",
-        "table__cell--" + cell.textAlign
+        "table__cell--" + cell.textAlign,
+        "table__cell--column-label"
       );
+      const arrowClass = classNames(
+        "table__arrow", {
+          "table__arrow--hidden": sortBy.get("column") !== cell.id
+        }
+      )
+      const sortArrow = (
+        <span className={arrowClass}>
+          { sortBy.get("order") === "DESC" ? " ▾ " : " ▴ "}
+        </span>
+      )
       return (
         <th className={cellClass}
-            key={typeof cell.title === "object" ? "checkbox" : cell.title}
+            key={typeof cell.title === "object" ? "checkbox" : cell.id}
+            onClick={() => sortTable(cell.id)}
+            title={"Sort by “" + cell.title + "”"}
         >
+          {cell.textAlign === "right" ? sortArrow : null}
           {cell.title}
+          {cell.textAlign === "left" ? sortArrow : null}
         </th>
       );
     });
@@ -74,7 +93,7 @@ class Table extends React.PureComponent {
                       columns[index].title
                   }
               >
-                {cell}
+                {cell.content}
               </td>
             );
           })}
@@ -84,6 +103,29 @@ class Table extends React.PureComponent {
   }
 
   render() {
+    const sortField = this.props.sortBy.get("column");
+    function compare(row_a, row_b) {
+      const sortValA = row_a.cells.filter(
+        cell => cell.id === sortField
+      )[0].sortableContent;
+
+      const sortValB = row_b.cells.filter(
+        cell => cell.id === sortField
+      )[0].sortableContent;
+
+      if (sortValA < sortValB)
+        return -1;
+      if (sortValA > sortValB)
+        return 1;
+      return 0;
+    }
+
+    let tableBody = this.props.tableBody.sort(compare);
+
+    tableBody = this.props.sortBy.get("order") === "ASC" ? tableBody : tableBody.reverse();
+
+    console.log(this.props.tableBody);
+
     return (
       <table className="table" style={this.props.style}>
         <thead className="table__head">
@@ -91,12 +133,14 @@ class Table extends React.PureComponent {
             this.props.tableHead,
             this.props.allSelected,
             this.props.toggleSelectAll,
-            this.props.items
+            this.props.items,
+            this.props.sortTable,
+            this.props.sortBy
           )}
         </thead>
         <tbody className="table__body">
           {this.renderBodyRows(
-            this.props.tableBody,
+            tableBody,
             this.props.tableHead,
             this.props.toggleSelect,
             this.props.selectedItems
@@ -111,7 +155,8 @@ class Table extends React.PureComponent {
 function mapStateToProps(state) {
   return {
     selectedItems: state.getIn(["ui", "table_view", "selectedKeys"]),
-    allSelected: !!state.getIn(["ui", "table_view", "allSelected"])
+    allSelected: !!state.getIn(["ui", "table_view", "allSelected"]),
+    sortBy: state.getIn(["ui", "table_view", "sortBy"])
   };
 }
 

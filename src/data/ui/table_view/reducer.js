@@ -1,9 +1,19 @@
-import { TOGGLE_SELECT, TOGGLE_SELECT_ALL, RESET_SELECTION } from "./actions";
+import {
+  TOGGLE_SELECT,
+  TOGGLE_SELECT_ALL,
+  RESET_SELECTION,
+  SORT
+} from "./actions";
+
 import { Map, Set } from "immutable";
 
 const initialState = Map({
   selectedKeys: Set(),
-  allSelected: false
+  allSelected: false,
+  sortBy: Map({
+    column: "lastModified",
+    order: "DESC"
+  })
 });
 
 export function reducer(state = initialState, action) {
@@ -28,6 +38,15 @@ export function reducer(state = initialState, action) {
     case RESET_SELECTION: {
       return state.set("selectedKeys", Set())
                   .set("allSelected", false );
+    }
+    case SORT: {
+      return action.column ? state.update("sortBy", current => {
+        return Map({
+          column: action.column,
+          order: current.get("column") === action.column &&
+                 current.get("order") === "DESC" ? "ASC" : "DESC"
+        })
+      }) : state.set("sortBy", initialState.get("sortBy"));
     }
     default: return state;
   }

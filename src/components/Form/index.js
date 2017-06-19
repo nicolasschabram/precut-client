@@ -7,7 +7,7 @@ import * as formActions from "data/ui/form/actions";
 
 class Form extends React.PureComponent {
   renderFields(fields, formId, setFormInput, state) {
-    return fields.map(function(field) {
+    return fields.map(function(field, index) {
       let fieldElements = [(
         <label className="form__label"
                htmlFor={field.id}
@@ -16,6 +16,7 @@ class Form extends React.PureComponent {
       )];
       switch (field.type) {
         case "input": {
+          const value = state.getIn([formId, field.id]);
           fieldElements.push((
             <div className="form__field-wrapper">
               <input className="form__field  form__field--input"
@@ -27,7 +28,8 @@ class Form extends React.PureComponent {
                      onChange={
                        evt => setFormInput(formId, field.id, evt.target.value)
                      }
-                     value={state.getIn([formId, field.id])}
+                     value={value ? value : ""}
+                     autoFocus={index === 0 ? true : false}
               />
             </div>
           ));

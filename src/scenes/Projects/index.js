@@ -17,26 +17,32 @@ const Projects = class extends React.PureComponent {
   getTableHead() {
     return [
       {
+        id: "name",
         title: "Name",
         textAlign: "left"
       },
       {
+        id: "tracks",
         title: "Tracks",
         textAlign: "right"
       },
       {
+        id: "soundbites",
         title: "Soundbites",
         textAlign: "right"
       },
       {
+        id: "tags",
         title: "Tags",
         textAlign: "right"
       },
       {
+        id: "boards",
         title: "Boards",
         textAlign: "right"
       },
       {
+        id: "lastModified",
         title: "Last Modified",
         textAlign: "left"
       }
@@ -47,30 +53,38 @@ const Projects = class extends React.PureComponent {
     return projects.map(function(project) {
       return {
         id: project.get("id"),
-        cells: [
-
-          (<div>
-            <Link to={{ pathname: "/project/" + project.get("id") }}>
-              {project.get("name")}
-            </Link>
-            <PencilIcon onClick={() => console.log("pencil icon clicked")} />
-          </div>),
-
-          // Track Count
-          project.get("tracks").count(),
-
-          // Soundbite Count
-          1,
-
-          // Tag Count
-          2,
-
-          // Board Count
-          3,
-
-          // Last modified
-          moment(project.get("lastModified")).fromNow()
-        ]
+        cells: [{
+          id: "name",
+          content: (
+            <div>
+              <Link to={{ pathname: "/project/" + project.get("id") }}>
+                {project.get("name")}
+              </Link>
+              <PencilIcon onClick={() => console.log("pencil icon clicked")} />
+            </div>
+          ),
+          sortableContent: project.get("name")
+        }, {
+          id: "tracks",
+          content: project.get("tracks").count(),
+          sortableContent: project.get("tracks").count()
+        }, {
+          id: "soundbites",
+          content: 1,
+          sortableContent: 1
+        }, {
+          id: "tags",
+          content: 2,
+          sortableContent: 2
+        }, {
+          id: "boards",
+          content: 3,
+          sortableContent: 3
+        }, {
+          id: "lastModified",
+          content: moment(project.get("lastModified")).fromNow(),
+          sortableContent: project.get("lastModified")
+        }]
       };
     });
   }
@@ -127,6 +141,8 @@ const Projects = class extends React.PureComponent {
 function mapStateToProps(state) {
   return {
     projects: state.get("projects"),
+    sortBy: state.getIn(["ui", "table_view", "sortBy", "column"]),
+    sortOrder: state.getIn(["ui", "table_view", "sortBy", "order"]),
     newProjectName: state.getIn(["ui", "forms", "new-project", "name"])
   };
 }
