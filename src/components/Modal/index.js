@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import {connect} from "react-redux";
 
 import Button from "components/Button";
-import Form from "components/Form";
 
 import * as modalActions from "data/ui/modal/actions";
 
@@ -24,12 +23,15 @@ class Modal extends React.PureComponent {
       this.props.hideModal();
     }
   }
-  renderButtons(buttons) {
+  renderButtons(buttons, cleanup) {
     return buttons.map(function(button) {
       return (
         <Button buttonText={button.text}
                 color={button.color}
-                onClick={() => button.onClick()}
+                onClick={() => {
+                  button.onClick();
+                  button.cleanUpForm ? cleanup() : null;
+                }}
                 style={{float: button.align}}
                 key={button.text}
                 type={button.submit ? "submit" : "button"}
@@ -42,21 +44,21 @@ class Modal extends React.PureComponent {
       <div role="dialog" className="dialog">
         <form className="dialog__box" ref="dialog__box" action="#0">
           <div className="dialog__title-container">
-            <h4 className="dialog__title">New Project</h4>
-            <button onClick={() => this.props.hideModal()}
+            <h4 className="dialog__title">{this.props.title}</h4>
+            <button onClick={() => {
+                                     this.props.hideModal();
+                                     this.props.cleanup();
+                                   }}
                     title="Close"
                     type="button"
                     className="dialog__close"
             ></button>
           </div>
           <div className="dialog__content-container">
-            <p>Are you sure you want to move 1 script to trash? This won’t affect your soundbites in other areas of the app.Are you sure you want to move 1 script to trash? This won’t affect your soundbites in other areas of the app.Are you sure you want to move 1 script to trash? This won’t affect your soundbites in other areas of the app.Are you sure you want to move 1 script to trash? This won’t affect your soundbites in other areas of the app.Are you sure you want to move 1 script to trash? This won’t affect your soundbites in other areas of the app.</p>
-            <p>Are you sure you want to move 1 script to trash? This won’t affect your soundbites in other areas of the app.</p>
-
-            <Form />
+            {this.props.content}
           </div>
           <div className="dialog__action-container">
-            {this.renderButtons(this.props.buttons)}
+            {this.renderButtons(this.props.buttons, () => this.props.cleanup())}
           </div>
         </form>
       </div>

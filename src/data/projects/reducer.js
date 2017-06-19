@@ -1,5 +1,5 @@
-import { MOVE_TO_TRASH } from "./actions";
-import { fromJS } from "immutable"
+import { MOVE_TO_TRASH, ADD } from "./actions";
+import { fromJS, Map, List } from "immutable"
 
 const initialState = fromJS([
   {
@@ -46,6 +46,15 @@ export function reducer(state = initialState, action) {
         newState = newState.setIn([index, "inTrash"], true)
       );
       return newState;
+    }
+
+    case ADD: {
+      return state.push(Map({
+        id: Math.random().toString(36).substring(2, 8) + Math.random().toString(36).substring(2, 8),
+        name: action.name,
+        lastModified: Date.now(),
+        tracks: List()
+      }))
     }
 
     default:

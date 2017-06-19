@@ -21,8 +21,10 @@ class TableView extends React.PureComponent {
                items={this.props.items}
         />
         {this.props.modalIsVisible ?
-          <Modal itemType={this.props.itemType}
+          <Modal title={this.props.modalTitle}
+                 content={this.props.modalContent}
                  buttons={this.props.modalButtons}
+                 cleanup={this.props.hideModalCleanup}
           /> :
           null}
       </div>

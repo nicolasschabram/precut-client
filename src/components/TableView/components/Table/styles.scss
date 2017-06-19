@@ -79,6 +79,27 @@
     &:last-child::after {
       right: 0;
     }
+
+    .icon--pencil {
+      height: .9rem;
+      fill: var(--black);
+      margin-left: .75rem;
+      margin-bottom: -.1rem;
+      cursor: pointer;
+      visibility: hidden;
+
+      &:hover, &:focus {
+        fill: var(--blue);
+      }
+
+      &:active {
+        fill: darken(#2BA4D7, 7.5%);
+      }
+    }
+
+    &:hover .icon--pencil {
+      visibility: visible;
+    }
   }
 
   .table__checkbox {

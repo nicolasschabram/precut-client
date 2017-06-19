@@ -1,13 +1,17 @@
 import React from "react";
 import moment from "moment";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 
+import Form from "components/Form";
 import Fold from "components/Fold";
 import TableView from "components/TableView";
 import PencilIcon from "components/Icon/components/Pencil";
-import {Link} from "react-router-dom";
 
 import * as projectActions from "data/projects/actions";
+import * as tableViewActions from "data/ui/table_view/actions";
+import * as modalActions from "data/ui/modal/actions";
+import * as formActions from "data/ui/form/actions";
 
 const Projects = class extends React.PureComponent {
   getTableHead() {
@@ -49,16 +53,7 @@ const Projects = class extends React.PureComponent {
             <Link to={{ pathname: "/project/" + project.get("id") }}>
               {project.get("name")}
             </Link>
-            <PencilIcon
-              style={{
-                height: ".9rem",
-                color: "var(--black)",
-                marginLeft: ".75rem",
-                marginBottom: "-.1rem",
-                cursor: "pointer"
-              }}
-              onClick={() => console.log("pencil icon clicked")}
-            />
+            <PencilIcon onClick={() => console.log("pencil icon clicked")} />
           </div>),
 
           // Track Count
@@ -90,15 +85,35 @@ const Projects = class extends React.PureComponent {
                  )}
                  checkbox={true}
                  itemType={["Project", "Projects"]}
-                 moveItemsToTrash={this.props.moveToTrash}
+                 moveItemsToTrash={this.props.moveProjectToTrash}
 
+                 modalTitle={"New Project"}
+                 modalContent={(
+                   <div>
+                     <p>Please provide a unique name for your new project.</p>
+
+                     <Form id="new-project"
+                           fields={[{
+                             type: "input",
+                             id: "name",
+                             text: "Name",
+                             required: true,
+                             placeholder: "My New Project"
+                           }]}
+                     />
+                   </div>
+                 )}
                  modalButtons={[{
                    text: "Create Project",
                    color: "blue",
                    submit: true,
-                   onClick: () => console.log("click"),
-                   align: "right"
+                   onClick: () => { this.props.addProject(this.props.newProjectName);
+                                    this.props.hideModal();
+                                  },
+                   align: "right",
+                   cleanUpForm: true
                  }]}
+                 hideModalCleanup={() => this.props.clearForm("new-project")}
       />
     );
     return <Fold content={content} />;
@@ -111,8 +126,12 @@ const Projects = class extends React.PureComponent {
 
 function mapStateToProps(state) {
   return {
-    projects: state.get("projects")
+    projects: state.get("projects"),
+    newProjectName: state.getIn(["ui", "forms", "new-project", "name"])
   };
 }
 
-export default connect(mapStateToProps, projectActions)(Projects);
+export default connect(
+  mapStateToProps,
+  {...projectActions, ...tableViewActions, ...modalActions, ...formActions}
+)(Projects);
