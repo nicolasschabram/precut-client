@@ -7,6 +7,7 @@ import Form from "components/Form";
 import Fold from "components/Fold";
 import TableView from "components/TableView";
 import PencilIcon from "components/Icon/components/Pencil";
+import PreviewPlayer from "components/Player/components/Preview";
 
 import * as trackActions from "data/tracks/actions";
 import * as tableViewActions from "data/ui/table_view/actions";
@@ -53,6 +54,10 @@ class Tracks extends React.PureComponent {
         id: "lastModified",
         title: "Last Modified",
         textAlign: "left"
+      }, {
+        id: "preview",
+        title: "",
+        textAlign: "center"
       }
     ];
   }
@@ -104,6 +109,13 @@ class Tracks extends React.PureComponent {
           id: "lastModified",
           content: moment(track.get("lastModified")).fromNow(),
           sortableContent: track.get("lastModified")
+        }, {
+          id: "preview",
+          content: (
+            <div>
+              <PreviewPlayer src={"/tracks/" + track.get("id") + ".mp3" } id={track.get("id") } />
+            </div>
+          )
         }]
       };
     });
@@ -138,7 +150,7 @@ class Tracks extends React.PureComponent {
                    </div>
                  )}
                  modalButtons={[{
-                   text: "New Track",
+                   text: "Upload Track",
                    color: "blue",
                    submit: true,
                    onClick: () => { this.props.addProject(this.props.newProjectName);

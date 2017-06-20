@@ -1,0 +1,14 @@
+.icon--play {
+  position: relative;
+  color: red;
+}
+
+  .icon--play__svg {
+    transform: rotate(-90deg);
+    width: 20px;
+  }
+
+    .icon--play__arc {
+      stroke-dasharray: 440;
+      stroke-dashoffset: 0;
+    }

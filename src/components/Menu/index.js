@@ -4,7 +4,7 @@ import Item from "./components/Item";
 
 export default class Menu extends React.PureComponent {
   render() {
-    const isProjects = this.props.location.pathname.includes("projects");
+    const isProjects = this.props.navItem === "projects";
 
     const pages = [{
       name: "Projects",
@@ -15,28 +15,28 @@ export default class Menu extends React.PureComponent {
     }, {
       name: "Tracks",
       hash: "tracks",
-      isActive: this.props.location.pathname.includes("/tracks"),
+      isActive: this.props.navItem === "tracks",
       isVisible: !isProjects
     }, {
       name: "Tags",
       hash: "tags",
-      isActive: this.props.location.pathname.includes("/tags"),
+      isActive: this.props.navItem === "tags",
       isVisible: !isProjects
     }, {
       name: "Boards",
       hash: "boards",
-      isActive: this.props.location.pathname.includes("/boards"),
+      isActive: this.props.navItem === "boards",
       isVisible: !isProjects
     }, {
       name: "Scripts",
       hash: "scripts",
-      isActive: this.props.location.pathname.includes("/scripts"),
+      isActive: this.props.navItem === "scripts",
       isVisible: !isProjects
     }, {
       name: "Settings",
       hash: "settings",
       isBottom: true,
-      isActive: this.props.location.pathname.includes("/settings"),
+      isActive: this.props.navItem === "settings",
       isVisible: true
     }];
 

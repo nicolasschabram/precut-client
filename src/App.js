@@ -16,29 +16,29 @@ export default class App extends React.Component {
           <Switch>
             <Route exact
                    path="/projects"
-                   render={routeProps => <Menu {...routeProps} />}
+                   render={routeProps => <Menu navItem="projects" {...routeProps} />}
             />
             {["/:projectId/tracks", "/track/:trackId"].map(path => (
               <Route exact
                      path={path}
                      key={path}
-                     render={routeProps => <Menu {...routeProps} />}
+                     render={routeProps => <Menu navItem="tracks" {...routeProps} />}
               />
             ))}
             <Route exact
                    path="/:project/tags"
-                   render={routeProps => <Menu {...routeProps} />}
+                   render={routeProps => <Menu navItem="tags" {...routeProps} />}
             />
             <Route exact
                    path="/:project/boards"
-                   render={routeProps => <Menu {...routeProps} />}
+                   render={routeProps => <Menu navItem="boards" {...routeProps} />}
             />
             <Route exact
                    path="/:project/scripts"
-                   render={routeProps => <Menu {...routeProps} />}
+                   render={routeProps => <Menu navItem="scripts" {...routeProps} />}
             />
             <Route path="/settings"
-                   render={routeProps => <Menu {...routeProps} />}
+                   render={routeProps => <Menu navItem="settings" {...routeProps} />}
             />
           </Switch>
           <main>
