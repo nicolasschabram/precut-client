@@ -18,7 +18,7 @@ class TableView extends React.PureComponent {
                tableHead={this.props.tableHead}
                tableBody={this.props.tableBody}
                checkbox={this.props.checkbox}
-               items={this.props.items}
+               items={this.props.items.filter(item => !item.get("inTrash"))}
         />
         {this.props.modalIsVisible ?
           <Modal title={this.props.modalTitle}

@@ -105,13 +105,15 @@ class Table extends React.PureComponent {
   render() {
     const sortField = this.props.sortBy.get("column");
     function compare(row_a, row_b) {
-      const sortValA = row_a.cells.filter(
+      let sortValA = row_a.cells.filter(
         cell => cell.id === sortField
-      )[0].sortableContent;
+      )[0];
+      sortValA = typeof sortValA.sortableContent !== "undefined" ? sortValA.sortableContent : sortValA.content;
 
-      const sortValB = row_b.cells.filter(
+      let sortValB = row_b.cells.filter(
         cell => cell.id === sortField
-      )[0].sortableContent;
+      )[0];
+      sortValB = typeof sortValB.sortableContent !== "undefined" ? sortValB.sortableContent : sortValB.content;
 
       if (sortValA < sortValB)
         return -1;

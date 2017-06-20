@@ -1,6 +1,7 @@
 .menu {
 	background-color: var(--black);
   flex-basis: 4.15rem;
+  flex-shrink: 0;
   padding-top: .5rem;
   padding-bottom: 1rem;
   position: relative;

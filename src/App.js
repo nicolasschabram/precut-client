@@ -6,19 +6,50 @@ import "styles.css";
 
 import Menu from "components/Menu";
 import Projects from "scenes/Projects";
+import Tracks from "scenes/Tracks";
 
 export default class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
         <div className="app">
-          <Menu />
+          <Switch>
+            <Route exact
+                   path="/projects"
+                   render={routeProps => <Menu {...routeProps} />}
+            />
+            {["/:projectId/tracks", "/track/:trackId"].map(path => (
+              <Route exact
+                     path={path}
+                     key={path}
+                     render={routeProps => <Menu {...routeProps} />}
+              />
+            ))}
+            <Route exact
+                   path="/:project/tags"
+                   render={routeProps => <Menu {...routeProps} />}
+            />
+            <Route exact
+                   path="/:project/boards"
+                   render={routeProps => <Menu {...routeProps} />}
+            />
+            <Route exact
+                   path="/:project/scripts"
+                   render={routeProps => <Menu {...routeProps} />}
+            />
+            <Route path="/settings"
+                   render={routeProps => <Menu {...routeProps} />}
+            />
+          </Switch>
           <main>
             <Switch>
               <Route exact
                      path="/projects"
                      component={Projects}
-                     onLeave={() => this.props.resetSelection}
+              />
+              <Route exact
+                     path="/:project/tracks"
+                     component={Tracks}
               />
             </Switch>
           </main>

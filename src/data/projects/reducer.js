@@ -1,37 +1,35 @@
-import { MOVE_TO_TRASH, ADD } from "./actions";
+import {
+  MOVE_TO_TRASH,
+  ADD,
+} from "./actions";
 import { fromJS, Map, List } from "immutable"
 
 const initialState = fromJS([
   {
     id: "asdf7adf",
     name: "Project 1",
-    lastModified: new Date(2017, 5, 16, 17, 25),
-    tracks: [{ id: "f34w2qr4f3" }, { id: "f34w2qr4f3" }]
+    lastModified: new Date(2017, 5, 16, 17, 25)
   },
   {
     id: "aasddadf",
     name: "Project 2",
-    lastModified: new Date(2017, 5, 15, 0, 3),
-    tracks: [{ id: "f34w2qr4ff" }]
+    lastModified: new Date(2017, 5, 15, 0, 3)
   },
   {
     id: "adasasdf",
     name: "Project 3",
     lastModified: new Date(2017, 5, 14, 17, 25),
-    tracks: [],
     inTrash: true
   },
   {
     id: "asdf7sge",
     name: "Project 4",
-    lastModified: new Date(2017, 0, 1, 17, 25),
-    tracks: [{ id: "f34s2qr4f3" }, { id: "f34w2qr443" }]
+    lastModified: new Date(2017, 0, 1, 17, 25)
   },
   {
     id: "NEWNEWNEW",
     name: "NEW",
-    lastModified: new Date(2001, 1, 16, 17, 25),
-    tracks: []
+    lastModified: new Date(2001, 1, 16, 17, 25)
   },
 ]);
 
