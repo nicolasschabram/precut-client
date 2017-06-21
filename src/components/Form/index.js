@@ -1,12 +1,19 @@
 import React from "react";
-import {connect} from "react-redux";
 
 import "./styles.css";
 
-import * as formActions from "data/ui/form/actions";
+export default class Form extends React.PureComponent {
 
-class Form extends React.PureComponent {
-  renderFields(fields, formId, setFormInput, state) {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  setInput(field, text) {
+    this.setState({[field]: text});
+  }
+
+  renderFields(fields, setInput, state) {
     return fields.map(function(field, index) {
       let fieldElements = [(
         <label className="form__label"
@@ -16,7 +23,7 @@ class Form extends React.PureComponent {
       )];
       switch (field.type) {
         case "input": {
-          const value = state.getIn([formId, field.id]);
+          const value = state[field.id];
           fieldElements.push((
             <div className="form__field-wrapper">
               <input className="form__field  form__field--input"
@@ -26,7 +33,7 @@ class Form extends React.PureComponent {
                      required={!!field.required}
                      placeholder={field.placeholder}
                      onChange={
-                       evt => setFormInput(formId, field.id, evt.target.value)
+                       evt => setInput(field.id, evt.target.value)
                      }
                      value={value ? value : ""}
                      autoFocus={index === 0 ? true : false}
@@ -58,19 +65,10 @@ class Form extends React.PureComponent {
       <div className="form">
         {this.renderFields(
           this.props.fields,
-          this.props.id,
-          this.props.setFormInput,
-          this.props.forms
+          (field, text) => this.setInput(field, text),
+          this.state
         )}
       </div>
     )
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    forms: state.getIn(["ui", "forms"])
-  };
-}
-
-export default connect(mapStateToProps, formActions)(Form);

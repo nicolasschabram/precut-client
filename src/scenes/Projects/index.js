@@ -10,9 +10,6 @@ import TableView from "components/TableView";
 import PencilIcon from "components/Icon/components/Pencil";
 
 import * as projectActions from "data/projects/actions";
-import * as tableViewActions from "data/ui/table_view/actions";
-import * as modalActions from "data/ui/modal/actions";
-import * as formActions from "data/ui/form/actions";
 
 class Projects extends React.PureComponent {
 
@@ -124,13 +121,10 @@ class Projects extends React.PureComponent {
                    text: "Create Project",
                    color: "blue",
                    submit: true,
-                   onClick: () => { this.props.addProject(this.props.newProjectName);
-                                    this.props.hideModal();
-                                  },
+                   onClick: (state) => this.props.addProject(state.name),
                    align: "right",
                    cleanUpForm: true
                  }]}
-                 hideModalCleanup={() => this.props.clearForm("new-project")}
       />
     );
     return (
@@ -141,10 +135,6 @@ class Projects extends React.PureComponent {
         </main>
       </div>
     );
-  }
-
-  componentWillUnmount() {
-    this.props.resetSelection();
   }
 }
 
@@ -160,5 +150,5 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(
   mapStateToProps,
-  {...projectActions, ...tableViewActions, ...modalActions, ...formActions}
+  {...projectActions}
 )(Projects);

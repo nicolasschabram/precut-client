@@ -1,11 +1,9 @@
 import React from "react";
-import {connect} from "react-redux";
 import classNames from "classnames";
 
 import "./styles.css";
-import * as tableViewActions from "data/ui/table_view/actions";
 
-class Table extends React.PureComponent {
+export default class Table extends React.PureComponent {
 
   componentDidMount() {
     this.props.sortTable();
@@ -34,12 +32,12 @@ class Table extends React.PureComponent {
       );
       const arrowClass = classNames(
         "table__arrow", {
-          "table__arrow--hidden": sortBy.get("column") !== cell.id
+          "table__arrow--hidden": sortBy.column !== cell.id
         }
       )
       const sortArrow = (
         <span className={arrowClass}>
-          { sortBy.get("order") === "DESC" ? " ▾ " : " ▴ "}
+          { sortBy.order === "DESC" ? " ▾ " : " ▴ "}
         </span>
       )
       return (
@@ -63,14 +61,13 @@ class Table extends React.PureComponent {
   }
 
   renderBodyRows(rows, columns, toggleSelect, selectedItems) {
-
     return rows.map(function(row, index, rows) {
       const checkbox = (
         <td className="table__cell  table__cell--body  table__cell--center">
           <input value={row.id + "--selected"}
                  type="checkbox"
                  checked={selectedItems.includes(row.id)}
-                 onChange={() => toggleSelect(row.id, rows.count())}
+                 onChange={() => toggleSelect(row.id)}
                  className="table__checkbox"
           />
         </td>
@@ -103,7 +100,7 @@ class Table extends React.PureComponent {
   }
 
   render() {
-    const sortField = this.props.sortBy.get("column");
+    const sortField = this.props.sortBy.column;
     function compare(row_a, row_b) {
       let sortValA = row_a.cells.filter(
         cell => cell.id === sortField
@@ -124,7 +121,7 @@ class Table extends React.PureComponent {
 
     let tableBody = this.props.tableBody.sort(compare);
 
-    tableBody = this.props.sortBy.get("order") === "ASC" ? tableBody : tableBody.reverse();
+    tableBody = this.props.sortBy.order === "ASC" ? tableBody : tableBody.reverse();
 
     return (
       <table className="table" style={this.props.style}>
@@ -152,12 +149,12 @@ class Table extends React.PureComponent {
 }
 
 
-function mapStateToProps(state) {
-  return {
-    selectedItems: state.getIn(["ui", "table_view", "selectedKeys"]),
-    allSelected: !!state.getIn(["ui", "table_view", "allSelected"]),
-    sortBy: state.getIn(["ui", "table_view", "sortBy"])
-  };
-}
+// function mapStateToProps(state) {
+//   return {
+//     selectedItems: state.getIn(["ui", "table_view", "selectedKeys"]),
+//     allSelected: !!state.getIn(["ui", "table_view", "allSelected"]),
+//     sortBy: state.getIn(["ui", "table_view", "sortBy"])
+//   };
+// }
 
-export default connect(mapStateToProps, tableViewActions)(Table);
+// export default connect(mapStateToProps, tableViewActions)(Table);

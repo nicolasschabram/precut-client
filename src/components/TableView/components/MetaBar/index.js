@@ -1,15 +1,11 @@
 import React from "react";
-import {connect} from "react-redux";
 import SearchBar from "components/SearchBar";
 import Button from "components/Button";
 import { Link } from "react-router-dom";
 
 import "./styles.css";
 
-import * as modalActions from "data/ui/modal/actions";
-import * as tableViewActions from "data/ui/table_view/actions";
-
-class MetaBar extends React.PureComponent {
+export default class MetaBar extends React.PureComponent {
   getButtonText(itemType, selectedItemCount) {
     return selectedItemCount === 1 ?
       "Delete 1 " + itemType[0] :
@@ -19,15 +15,14 @@ class MetaBar extends React.PureComponent {
     return (
       <div className="meta-bar">
         <SearchBar itemType={this.props.itemType} />
-        { this.props.selectedKeys.count() ?
+        { this.props.selectedItems.length ?
           <Button buttonText={this.getButtonText(this.props.itemType,
-                                                 this.props.selectedKeys.count())}
+                                                 this.props.selectedItems.length)}
                   color="red"
                   onClick={() => {
                     this.props.moveItemsToTrash(
-                      this.props.selectedKeys
+                      this.props.selectedItems
                     );
-                    this.props.resetSelection();
                   }}
           /> :
           null
@@ -47,14 +42,3 @@ class MetaBar extends React.PureComponent {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    selectedKeys: state.getIn(["ui", "table_view", "selectedKeys"])
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  {...modalActions, ...tableViewActions}
-)(MetaBar);

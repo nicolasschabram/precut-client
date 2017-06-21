@@ -1,14 +1,11 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-import {connect} from "react-redux";
 
 import Button from "components/Button";
 
-import * as modalActions from "data/ui/modal/actions";
-
 import "./styles.css";
 
-class Modal extends React.PureComponent {
+export default class Modal extends React.PureComponent {
 
   componentDidMount () {
     document.addEventListener('click', this.handleClick.bind(this))
@@ -21,17 +18,12 @@ class Modal extends React.PureComponent {
     const dialog = ReactDOM.findDOMNode(this.refs.dialog__box);
     if (dialog && !dialog.contains(evt.target)) {
       this.props.hideModal();
-      this.props.cleanup();
     }
   }
   renderButtons(buttons, cleanup) {
     return buttons.map(function(button) {
       const onClick = button.submit ? null : {
-        onClick: () => {
-          button.onClick();
-          // eslint-disable-next-line
-          button.cleanUpForm ? cleanup() : null;
-        }
+        onClick: () => button.onClick()
       }
       return (
         <Button buttonText={button.text}
@@ -46,7 +38,6 @@ class Modal extends React.PureComponent {
   }
   render() {
     const buttons = this.props.buttons;
-    console.log(buttons);
     return (
       <div role="dialog" className="dialog">
         <form className="dialog__box"
@@ -55,15 +46,11 @@ class Modal extends React.PureComponent {
               onSubmit={(evt) => {
                 evt.preventDefault();
                 buttons.filter(button => button.submit)[0].onClick();
-                this.props.cleanup();
               }}
         >
           <div className="dialog__title-container">
             <h4 className="dialog__title">{this.props.title}</h4>
-            <button onClick={() => {
-                                     this.props.hideModal();
-                                     this.props.cleanup();
-                                   }}
+            <button onClick={() => this.props.hideModal()}
                     title="Close"
                     type="button"
                     className="dialog__close"
@@ -80,5 +67,3 @@ class Modal extends React.PureComponent {
     );
   }
 }
-
-export default connect(null, modalActions)(Modal);

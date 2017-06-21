@@ -1,11 +1,90 @@
 import React from "react";
-import {connect} from "react-redux";
 
 import MetaBar from "./components/MetaBar";
 import Table from "./components/Table";
 import Modal from "components/Modal";
 
-class TableView extends React.PureComponent {
+export default class TableView extends React.PureComponent {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedItems: [],
+      allSelected: false,
+      sortBy: {
+        column: "lastModified",
+        order: "DESC"
+      },
+      modalIsVisible: false
+    }
+  }
+
+  toggleSelect(key) {
+    this.setState((prevState, props) => {
+      return {
+        selectedItems: prevState.selectedItems.indexOf(key) >= 0 ?
+          prevState.selectedItems.filter(item => item !== key) :
+          prevState.selectedItems.concat([key])
+      }
+    }, () => {
+      this.setState((prevState, props) => {
+        return {
+          allSelected: prevState.selectedItems.length === props.items.filter(
+            item => !item.get("inTrash")
+          ).count()
+        };
+      });
+    });
+  }
+
+  toggleSelectAll() {
+    this.setState((prevState, props) => {
+      return {
+        selectedItems: prevState.allSelected ?
+          [] :
+          props.items.filter(
+            item => !item.get("inTrash")
+          ).map(
+            item => item.get("id")
+          ),
+        allSelected: !prevState.allSelected
+      }
+    });
+  }
+
+  sortTable(column) {
+    if (column) {
+      this.setState(prevState => {
+        return {
+          sortBy: {
+            column: column,
+            order: prevState.sortBy.column === column &&
+                   prevState.sortBy.order === "DESC" ? "ASC" : "DESC"
+          }
+        }
+      });
+    } else {
+      this.setState({
+        sortBy: {
+          column: "lastModified",
+          order: "DESC"
+        }
+      })
+    }
+  }
+
+  showModal() {
+    this.setState({
+      modalIsVisible: true
+    });
+  }
+
+  hideModal() {
+    this.setState({
+      modalIsVisible: false
+    });
+  }
+
   render() {
     return (
       <div>
@@ -13,18 +92,27 @@ class TableView extends React.PureComponent {
                  itemType={this.props.itemType}
                  items={this.props.items}
                  moveItemsToTrash={this.props.moveItemsToTrash}
+                 showModal={() => this.showModal()}
+                 hideModal={() => this.hideModal()}
+                 selectedItems={this.state.selectedItems}
         />
         <Table style={{marginTop: "1rem"}}
                tableHead={this.props.tableHead}
                tableBody={this.props.tableBody}
                checkbox={this.props.checkbox}
                items={this.props.items.filter(item => !item.get("inTrash"))}
+               selectedItems={this.state.selectedItems}
+               allSelected={this.state.allSelected}
+               sortBy={this.state.sortBy}
+               toggleSelect={key => this.toggleSelect(key)}
+               toggleSelectAll={() => this.toggleSelectAll()}
+               sortTable={column => this.sortTable(column)}
         />
-        {this.props.modalIsVisible ?
+        {this.state.modalIsVisible ?
           <Modal title={this.props.modalTitle}
                  content={this.props.modalContent}
                  buttons={this.props.modalButtons}
-                 cleanup={this.props.hideModalCleanup}
+                 hideModal={() => this.hideModal()}
           /> :
           null}
       </div>
@@ -32,10 +120,10 @@ class TableView extends React.PureComponent {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    modalIsVisible: state.getIn(["ui", "modal", "isVisible"])
-  };
-}
+// function mapStateToProps(state) {
+//   return {
+//     modalIsVisible: state.getIn(["ui", "modal", "isVisible"])
+//   };
+// }
 
-export default connect(mapStateToProps)(TableView);
+// export default connect(mapStateToProps)(TableView);
