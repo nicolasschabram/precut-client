@@ -79,8 +79,13 @@
 .button--small {
   height: (25 / 15) + rem;
   line-height: ((25 - 4) / 15) + rem;
-  border: (2 / 15) + rem solid #fff;
+  border: (1.5 / 15) + rem solid #fff;
   font-size: (12 / 15) + rem;
   box-shadow: none;
-  padding: 0 .3rem;
+  padding: 0 .4rem;
+
+  &:hover,
+  &:focus {
+    box-shadow: none;
+  }
 }

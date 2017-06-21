@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 
 import "./styles.css";
 
@@ -7,17 +8,19 @@ export default class Play extends React.PureComponent {
     const arcStyle = {
       strokeDashoffset: this.props.progress * 4.4
     }
-    console.log(this.props.progress)
+    const divClass = classNames(
+      "icon--play", {
+        "icon--play--playing": this.props.playing,
+        "icon--play--paused": !this.props.playing
+      }
+    );
     return (
-      <div className="icon--play"
-           title="Play/Pause"
+      <div className={divClass}
+           title={this.props.playing ? "Pause" : "Play"}
            onClick={this.props.onClick ? this.props.onClick : null }
       >
-        <span className="icon--play__triangle">
-          {!!this.props.playing ? "▌▌" : "►" }
-        </span>
         <svg className="icon--play__svg"
-             viewBox="0 0 160 160"
+             viewBox="-4 -4 168 168"
              xmlns="http://www.w3.org/2000/svg"
         >
           <g>
@@ -26,9 +29,6 @@ export default class Play extends React.PureComponent {
                     r="69.85699"
                     cy="81"
                     cx="81"
-                    strokeWidth="15"
-                    stroke="#69aff4"
-                    fill="none"
                     style={arcStyle}
             />
           </g>

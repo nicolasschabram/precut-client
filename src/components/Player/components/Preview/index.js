@@ -1,4 +1,6 @@
 import React from "react";
+import classNames from "classnames";
+
 import PlayIcon from "components/Icon/components/Play";
 
 export default class PreviewPlayer extends React.PureComponent {
@@ -9,10 +11,6 @@ export default class PreviewPlayer extends React.PureComponent {
       currentTime: 0,
       duration: 0
     }
-  }
-  componentDidMount() {
-    console.log(this.player.duration);
-
   }
   togglePlay() {
     this.state.playing ? this.player.pause() : this.player.play();
@@ -25,8 +23,16 @@ export default class PreviewPlayer extends React.PureComponent {
     this.setState({ currentTime: this.player.currentTime });
   }
   render() {
+    const playerClass = classNames(
+      "player--preview",
+      this.props.className
+    );
+    const divStyle = this.state.playing ? {visibility: "visible"} : null;
     return (
-      <div className="player--preview">
+      <div className={playerClass}
+           onClick={e => e.stopPropagation()}
+           style={divStyle}
+      >
         <audio id={"player--" + this.props.id}
                ref={ player => { this.player = player; } }
                onTimeUpdate={() => this.updateArc()}
@@ -35,7 +41,11 @@ export default class PreviewPlayer extends React.PureComponent {
           Sorry, your browser does not support audio playback. Please update!
         </audio>
         <PlayIcon onClick={() => this.togglePlay()}
-                  progress={this.state.duration ? this.state.currentTime / this.state.duration * 100 : 0}
+                  progress={
+                    this.state.duration ?
+                      this.state.currentTime / this.state.duration * 100 :
+                      0
+                  }
                   onEnded={() => this.setState({currentTime: 0})}
                   playing={this.state.playing}
         />

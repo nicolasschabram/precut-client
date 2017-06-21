@@ -8,16 +8,17 @@ import Form from "components/Form";
 import Fold from "components/Fold";
 import TableView from "components/TableView";
 import PencilIcon from "components/Icon/components/Pencil";
+import PreviewPlayer from "components/Player/components/Preview";
 
-import * as projectActions from "data/projects/actions";
+import * as trackActions from "data/tracks/actions";
 import * as tableViewActions from "data/ui/table_view/actions";
 import * as modalActions from "data/ui/modal/actions";
 import * as formActions from "data/ui/form/actions";
 
-class Projects extends React.PureComponent {
+class Tracks extends React.PureComponent {
 
   componentDidMount() {
-    document.title = "Projects - Precut";
+    document.title = "Tracks - Precut";
   }
 
   getTableHead() {
@@ -26,66 +27,93 @@ class Projects extends React.PureComponent {
         id: "name",
         title: "Name",
         textAlign: "left"
-      },
-      {
-        id: "tracks",
-        title: "Tracks",
-        textAlign: "right"
-      },
-      {
+      }, {
         id: "soundbites",
         title: "Soundbites",
         textAlign: "right"
-      },
-      {
+      }, {
+        id: "duration",
+        title: "Duration",
+        textAlign: "left"
+      }, {
+        id: "speakers",
+        title: "Speakers",
+        textAlign: "left"
+      }, {
+        id: "reporters",
+        title: "Reporters",
+        textAlign: "left"
+      }, {
         id: "tags",
         title: "Tags",
-        textAlign: "right"
-      },
-      {
-        id: "boards",
-        title: "Boards",
-        textAlign: "right"
-      },
-      {
+        textAlign: "left"
+      }, {
+        id: "rec_date",
+        title: "Recording Date",
+        textAlign: "left"
+      }, {
         id: "lastModified",
         title: "Last Modified",
         textAlign: "left"
+      }, {
+        id: "preview",
+        title: "",
+        textAlign: "center"
       }
     ];
   }
 
-  getTableBody(projects, tracks) {
-    return projects.map(function(project) {
+  getTableBody(tracks, soundbites) {
+    return tracks.map(function(track) {
       return {
-        id: project.get("id"),
+        id: track.get("id"),
         cells: [{
           id: "name",
           content: (
             <div>
-              <Link to={{ pathname: "/" + project.get("id") + "/tracks" }}>
-                {project.get("name")}
+              <Link to={{ pathname: "/track/" + track.get("id") }}>
+                {track.get("name")}
               </Link>
               <PencilIcon onClick={() => console.log("pencil icon clicked")} />
             </div>
           ),
-          sortableContent: project.get("name")
-        }, {
-          id: "tracks",
-          content: tracks.filter(track => track.get("project") === project.get("id")).count()
+          sortableContent: track.get("name")
         }, {
           id: "soundbites",
-          content: 1
+          content: soundbites.filter(
+            soundbite => soundbite.get("track") === track.get("id")
+          ).count()
+        }, {
+          id: "duration",
+          content: track.get("duration")
+        }, {
+          id: "speakers",
+          content: track.get("speakers").map(speaker => speaker.get("name")).join(", ")
+        }, {
+          id: "reporters",
+          content: track.get("reporters").map(reporter => reporter.get("name")).join(", ")
         }, {
           id: "tags",
-          content: 2
+          content: track.get("tags").map(tag => tag.get("name")).join(", ")
         }, {
-          id: "boards",
-          content: 3
+          id: "rec_date",
+          content: (
+            <span title={moment(track.get("recDate")).format("MMMM Do YYYY, h:mm a")}>
+              { moment(track.get("recDate")).format("DD-MM-YYYY") }
+            </span>
+          ),
+          sortableContent: track.get("recDate")
         }, {
           id: "lastModified",
-          content: moment(project.get("lastModified")).fromNow(),
-          sortableContent: project.get("lastModified")
+          content: moment(track.get("lastModified")).fromNow(),
+          sortableContent: track.get("lastModified")
+        }, {
+          id: "preview",
+          content: (
+            <div>
+              <PreviewPlayer src={"/tracks/" + track.get("id") + ".mp3" } id={track.get("id") } />
+            </div>
+          )
         }]
       };
     });
@@ -94,15 +122,15 @@ class Projects extends React.PureComponent {
   render() {
     const content = () => (
       <TableView location={this.props.location}
-                 items={this.props.projects}
+                 items={this.props.tracks}
                  tableHead={this.getTableHead()}
                  tableBody={this.getTableBody(
-                   this.props.projects.filter(project => !project.get("inTrash")),
-                   this.props.tracks.filter(track => !track.get("inTrash"))
+                   this.props.tracks.filter(track => !track.get("inTrash")),
+                   this.props.soundbites
                  )}
                  checkbox={true}
-                 itemType={["Project", "Projects"]}
-                 moveItemsToTrash={this.props.moveProjectsToTrash}
+                 itemType={["Track", "Tracks"]}
+                 moveItemsToTrash={this.props.moveTracksToTrash}
 
                  modalTitle={"New Project"}
                  modalContent={(
@@ -121,7 +149,7 @@ class Projects extends React.PureComponent {
                    </div>
                  )}
                  modalButtons={[{
-                   text: "Create Project",
+                   text: "Upload Track",
                    color: "blue",
                    submit: true,
                    onClick: () => { this.props.addProject(this.props.newProjectName);
@@ -135,7 +163,7 @@ class Projects extends React.PureComponent {
     );
     return (
       <div className="app">
-        <Menu active="projects" project="asdasd" />
+        <Menu active="tracks" project={this.props.match.params.project} />
         <main>
           <Fold content={content} />
         </main>
@@ -150,15 +178,15 @@ class Projects extends React.PureComponent {
 
 function mapStateToProps(state, ownProps) {
   return {
-    projects: state.get("projects"),
-    tracks: state.get("tracks"),
+    tracks: state.get("tracks").filter(track => track.get("project") === ownProps.match.params.project),
     sortBy: state.getIn(["ui", "table_view", "sortBy", "column"]),
     sortOrder: state.getIn(["ui", "table_view", "sortBy", "order"]),
-    newProjectName: state.getIn(["ui", "forms", "new-project", "name"])
+    newProjectName: state.getIn(["ui", "forms", "new-project", "name"]),
+    soundbites: state.get("soundbites")
   };
 }
 
 export default connect(
   mapStateToProps,
-  {...projectActions, ...tableViewActions, ...modalActions, ...formActions}
-)(Projects);
+  {...trackActions, ...tableViewActions, ...modalActions, ...formActions}
+)(Tracks);

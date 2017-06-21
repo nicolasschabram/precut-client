@@ -5,11 +5,6 @@ const initialState = fromJS([{
   id: "f34w2qr4f3",
   project: "asdf7adf",
   name: "Test track",
-  soundbites: [{
-    id: "sadasdasd",
-  }, {
-    id: "987z98rhu"
-  }],
   duration: "00:10:23",
   speakers: [{
     id: "ajhsdoh23",
@@ -38,11 +33,6 @@ const initialState = fromJS([{
   id: "f3ws2qr4f3",
   project: "asdf7adf",
   name: "Test track 2",
-  soundbites: [{
-    id: "sadasdasd",
-  }, {
-    id: "987z98rhu"
-  }],
   duration: "00:02:01",
   speakers: [{
     id: "ajhsdoh23",

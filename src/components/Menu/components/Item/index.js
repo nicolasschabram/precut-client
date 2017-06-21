@@ -59,7 +59,7 @@ export default class Item extends React.PureComponent {
 
     return (
       <li className={itemClass}>
-        <Link to={{ pathname: "/" + this.props.hash }}
+        <Link to={{ pathname: this.props.path }}
               title={this.props.name}
               className={linkClass}>
           <Icon {...props}/>{this.props.name}
