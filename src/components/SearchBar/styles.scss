@@ -1,0 +1,79 @@
+.search-bar {
+  display: inline-block;
+  width: 100%;
+  max-width: 20rem;
+}
+
+  .search-bar__fieldset {
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+  }
+
+    // wrapper is necessary as you cannot use display: flex on fieldsets
+    .search-bar__inner-wrapper {
+      display: flex;
+    }
+
+      .search-bar__legend,
+      .search-bar__label {
+        display: none;
+      }
+
+      .search-bar__input {
+        border-color: var(--dark-grey);
+        border-width: 1px;
+        border-style: solid;
+        border-right: 0 none;
+        height: 2rem;
+        line-height: 2rem;
+        font-size: .8rem;
+        color: var(--black);
+        background-color: white;
+        padding: 0 .5rem;
+        flex-grow: 1;
+        display: inline-block;
+        font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        outline: none;
+
+        &::placeholder {
+          color: var(--medium-grey);
+        }
+      }
+
+      // wrapper is necesseary as you cannot use flex-box properties on buttons
+      .search-bar__button-wrapper {
+        flex-basis: 2rem;
+        flex-grow: 0;
+      }
+
+        .search-bar__button {
+          background-color: white;
+          height: 2rem;
+          border-width: 1px;
+          border-color: var(--dark-grey);
+          border-style: solid;
+          border-left: 0 none;
+          display: block;
+          position: relative;
+          width: 100%;
+          text-align: center;
+          padding: 0;
+          cursor: pointer;
+
+          &::before {
+            content: '';
+            width: 1px;
+            height: 1.2rem;
+            background-color: var(--dark-grey);
+            display: block;
+            margin-right: 2px;
+            position: absolute;
+          }
+        }
+
+          .search-bar__search-icon {
+            width: (2/3) + rem;
+            fill: var(--black);
+            display: inline-block;
+          }

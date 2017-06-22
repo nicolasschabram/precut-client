@@ -1,0 +1,31 @@
+.close-icon {
+  float: right;
+  border-radius: 5rem;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--black);
+  background-color: transparent;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &::after,
+  &::before {
+    content: '';
+    display: block;
+    width: 1px;
+    background-color: var(--black);
+    height: 65%;
+    position: absolute;
+  }
+
+  &::after {
+    transform: rotate(45deg);
+  }
+
+  &::before {
+    transform: rotate(-45deg);
+  }
+}
