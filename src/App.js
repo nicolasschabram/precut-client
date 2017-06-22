@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import "normalize.css";
 import "styles.css";
@@ -13,10 +13,17 @@ export default class App extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
+
+          <Route exact
+                 path="/"
+                 render={() => (<Redirect to="/projects" />)}
+          />
+
           <Route exact
                  path="/projects"
                  component={Projects}
           />
+
           {["/:project/tracks", "/track/:track"].map(path => (
             <Route exact
                    path={path}
@@ -28,6 +35,7 @@ export default class App extends React.Component {
                    }
             />
           ))}
+
         </Switch>
       </BrowserRouter>
     );

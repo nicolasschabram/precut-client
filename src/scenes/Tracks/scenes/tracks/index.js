@@ -4,16 +4,12 @@ import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
 import Menu from "components/Menu";
-import Form from "components/Form";
 import Fold from "components/Fold";
 import TableView from "components/TableView";
 import PencilIcon from "components/Icon/components/Pencil";
 import PreviewPlayer from "components/Player/components/Preview";
 
 import * as trackActions from "data/tracks/actions";
-import * as tableViewActions from "data/ui/table_view/actions";
-import * as modalActions from "data/ui/modal/actions";
-import * as formActions from "data/ui/form/actions";
 
 class Tracks extends React.PureComponent {
 
@@ -132,33 +128,23 @@ class Tracks extends React.PureComponent {
                  itemType={["Track", "Tracks"]}
                  moveItemsToTrash={this.props.moveTracksToTrash}
 
-                 modalTitle={"New Project"}
+                 modalTitle={"New Track"}
                  modalContent={(
                    <div>
-                     <p>Please provide a unique name for your new project.</p>
-
-                     <Form id="new-project"
-                           fields={[{
-                             type: "input",
-                             id: "name",
-                             text: "Name",
-                             required: true,
-                             placeholder: "My New Project"
-                           }]}
-                     />
+                     TEST
                    </div>
                  )}
                  modalButtons={[{
-                   text: "Upload Track",
+                   text: "Create Project",
                    color: "blue",
                    submit: true,
-                   onClick: () => { this.props.addProject(this.props.newProjectName);
-                                    this.props.hideModal();
-                                  },
-                   align: "right",
-                   cleanUpForm: true
+                   onClick: () => {
+                     this.props.addProject(this.state.addProjectForm.name);
+                     this.resetInput();
+                   },
+                   hideModal: true,
+                   align: "right"
                  }]}
-                 hideModalCleanup={() => this.props.clearForm("new-project")}
       />
     );
     return (
@@ -170,23 +156,13 @@ class Tracks extends React.PureComponent {
       </div>
     );
   }
-
-  componentWillUnmount() {
-    this.props.resetSelection();
-  }
 }
 
 function mapStateToProps(state, ownProps) {
   return {
     tracks: state.get("tracks").filter(track => track.get("project") === ownProps.match.params.project),
-    sortBy: state.getIn(["ui", "table_view", "sortBy", "column"]),
-    sortOrder: state.getIn(["ui", "table_view", "sortBy", "order"]),
-    newProjectName: state.getIn(["ui", "forms", "new-project", "name"]),
     soundbites: state.get("soundbites")
   };
 }
 
-export default connect(
-  mapStateToProps,
-  {...trackActions, ...tableViewActions, ...modalActions, ...formActions}
-)(Tracks);
+export default connect(mapStateToProps, trackActions)(Tracks);

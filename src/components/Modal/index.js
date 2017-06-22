@@ -20,18 +20,18 @@ export default class Modal extends React.PureComponent {
       this.props.hideModal();
     }
   }
-  renderButtons(buttons, cleanup) {
+  renderButtons(buttons, hideModal) {
     return buttons.map(function(button) {
-      const onClick = button.submit ? null : {
-        onClick: () => button.onClick()
-      }
       return (
         <Button buttonText={button.text}
                 color={button.color}
                 style={{float: button.align}}
                 key={button.text}
                 type={button.submit ? "submit" : "button"}
-                {...onClick}
+                onClick={() => {
+                  button.onClick();
+                  if (button.hideModal) hideModal();
+                }}
         />
       );
     });
@@ -46,6 +46,7 @@ export default class Modal extends React.PureComponent {
               onSubmit={(evt) => {
                 evt.preventDefault();
                 buttons.filter(button => button.submit)[0].onClick();
+                this.props.hideModal();
               }}
         >
           <div className="dialog__title-container">
@@ -60,7 +61,7 @@ export default class Modal extends React.PureComponent {
             {this.props.content}
           </div>
           <div className="dialog__action-container">
-            {this.renderButtons(this.props.buttons, () => this.props.cleanup())}
+            {this.renderButtons(this.props.buttons, () => this.props.hideModal())}
           </div>
         </form>
       </div>

@@ -46,9 +46,15 @@ export default class TableView extends React.PureComponent {
             item => !item.get("inTrash")
           ).map(
             item => item.get("id")
-          ),
+          ).toArray(),
         allSelected: !prevState.allSelected
       }
+    });
+  }
+
+  resetSelection() {
+    this.setState({
+      selectedItems: []
     });
   }
 
@@ -91,7 +97,10 @@ export default class TableView extends React.PureComponent {
         <MetaBar location={this.props.location}
                  itemType={this.props.itemType}
                  items={this.props.items}
-                 moveItemsToTrash={this.props.moveItemsToTrash}
+                 moveItemsToTrash={(items) => {
+                  this.props.moveItemsToTrash(items);
+                  this.resetSelection();
+                 }}
                  showModal={() => this.showModal()}
                  hideModal={() => this.hideModal()}
                  selectedItems={this.state.selectedItems}
@@ -119,11 +128,3 @@ export default class TableView extends React.PureComponent {
     )
   }
 }
-
-// function mapStateToProps(state) {
-//   return {
-//     modalIsVisible: state.getIn(["ui", "modal", "isVisible"])
-//   };
-// }
-
-// export default connect(mapStateToProps)(TableView);

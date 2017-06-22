@@ -41,7 +41,7 @@ class Track extends React.PureComponent {
         <main style={grid}>
           <HeaderBar back={{
                        text: "All Tracks",
-                       path: this.props.match.path
+                       path: "/" + this.props.track.get("project") + "/tracks"
                      }}
                      title={this.props.track.get("name")}
                      button={{

@@ -4,15 +4,6 @@ import "./styles.css";
 
 export default class Form extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  setInput(field, text) {
-    this.setState({[field]: text});
-  }
-
   renderFields(fields, setInput, state) {
     return fields.map(function(field, index) {
       let fieldElements = [(
@@ -65,8 +56,8 @@ export default class Form extends React.PureComponent {
       <div className="form">
         {this.renderFields(
           this.props.fields,
-          (field, text) => this.setInput(field, text),
-          this.state
+          (field, text) => this.props.setInput(field, text),
+          this.props.formState
         )}
       </div>
     )

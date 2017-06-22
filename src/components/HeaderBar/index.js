@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import Button from "components/Button";
 
 import "./styles.css";
@@ -8,11 +10,11 @@ export default class HeaderBar extends React.PureComponent {
     return (
       <header className="header-bar" style={this.props.style}>
 
-        <a className="header-bar__back"
-           href={this.props.back.path}
+        <Link to={{ pathname: this.props.back.path }}
+              className="header-bar__back"
         >
           {this.props.back.text}
-        </a>
+        </Link>
 
         <h1 className="header-bar__title">{this.props.title}</h1>
 

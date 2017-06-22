@@ -13,8 +13,26 @@ import * as projectActions from "data/projects/actions";
 
 class Projects extends React.PureComponent {
 
+  constructor(props) {
+    super(props);
+    this.state = {addProjectForm: {}}
+  }
+
   componentDidMount() {
     document.title = "Projects - Precut";
+  }
+
+  setInput(field, text) {
+    console.log(text);
+    this.setState({
+      addProjectForm: {
+        [field]: text
+      }
+    });
+  }
+
+  resetInput() {
+    this.setState({addProjectForm: {}});
   }
 
   getTableHead() {
@@ -114,6 +132,8 @@ class Projects extends React.PureComponent {
                              required: true,
                              placeholder: "My New Project"
                            }]}
+                           setInput={(field, text) => this.setInput(field, text)}
+                           formState={this.state.addProjectForm}
                      />
                    </div>
                  )}
@@ -121,9 +141,12 @@ class Projects extends React.PureComponent {
                    text: "Create Project",
                    color: "blue",
                    submit: true,
-                   onClick: (state) => this.props.addProject(state.name),
-                   align: "right",
-                   cleanUpForm: true
+                   onClick: () => {
+                     this.props.addProject(this.state.addProjectForm.name);
+                     this.resetInput();
+                   },
+                   hideModal: true,
+                   align: "right"
                  }]}
       />
     );
@@ -141,10 +164,7 @@ class Projects extends React.PureComponent {
 function mapStateToProps(state, ownProps) {
   return {
     projects: state.get("projects"),
-    tracks: state.get("tracks"),
-    sortBy: state.getIn(["ui", "table_view", "sortBy", "column"]),
-    sortOrder: state.getIn(["ui", "table_view", "sortBy", "order"]),
-    newProjectName: state.getIn(["ui", "forms", "new-project", "name"])
+    tracks: state.get("tracks")
   };
 }
 
