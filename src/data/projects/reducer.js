@@ -2,7 +2,7 @@ import {
   MOVE_TO_TRASH,
   ADD,
 } from "./actions";
-import { fromJS, Map, List } from "immutable"
+import { fromJS, Map } from "immutable"
 
 const initialState = fromJS([
   {

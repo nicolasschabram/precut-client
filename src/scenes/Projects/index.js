@@ -70,8 +70,16 @@ class Projects extends React.PureComponent {
     ];
   }
 
-  getTableBody(projects, files) {
-    return projects.map(function(project) {
+  getSoundbiteCount(project, files, soundbites) {
+    files = files.filter(file => file.get("project") === project.get("id"))
+                 .map(file => file.get("id"));
+
+    return soundbites.filter(soundbite => files.includes(soundbite.get("file")))
+                     .count();
+  }
+
+  getTableBody(projects, files, soundbites) {
+    return projects.map(project => {
       return {
         id: project.get("id"),
         cells: [{
@@ -87,10 +95,11 @@ class Projects extends React.PureComponent {
           sortableContent: project.get("name")
         }, {
           id: "files",
-          content: files.filter(file => file.get("project") === project.get("id")).count()
+          content: files.filter(file => file.get("project") === project.get("id"))
+                        .count()
         }, {
           id: "soundbites",
-          content: 1
+          content: this.getSoundbiteCount(project, files, soundbites)
         }, {
           id: "tags",
           content: 2
@@ -113,7 +122,8 @@ class Projects extends React.PureComponent {
                  tableHead={this.getTableHead()}
                  tableBody={this.getTableBody(
                    this.props.projects.filter(project => !project.get("inTrash")),
-                   this.props.files.filter(file => !file.get("inTrash"))
+                   this.props.files.filter(file => !file.get("inTrash")),
+                   this.props.soundbites
                  )}
                  checkbox={true}
                  itemType={["Project", "Projects"]}
@@ -164,7 +174,8 @@ class Projects extends React.PureComponent {
 function mapStateToProps(state, ownProps) {
   return {
     projects: state.get("projects"),
-    files: state.get("files")
+    files: state.get("files"),
+    soundbites: state.get("soundbites")
   };
 }
 
