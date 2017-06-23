@@ -4,7 +4,7 @@ import { fromJS } from "immutable"
 const initialState = fromJS([{
   id: "f34w2qr4f3",
   project: "asdf7adf",
-  name: "Test track",
+  name: "Test file",
   duration: "00:10:23",
   speakers: [{
     id: "ajhsdoh23",
@@ -26,13 +26,13 @@ const initialState = fromJS([{
     sound: 4,
     content: 3
   },
-  summary: "This is a summary of the track.",
+  summary: "This is a summary of the file.",
   notes: "Here are some sample notes.",
   lastModified: new Date(2014, 5, 16, 17, 25)
 }, {
   id: "f3ws2qr4f3",
   project: "asdf7adf",
-  name: "Test track 2",
+  name: "Test file 2",
   duration: "00:02:01",
   speakers: [{
     id: "ajhsdoh23",
@@ -54,7 +54,7 @@ const initialState = fromJS([{
     sound: 4,
     content: 3
   },
-  summary: "This is a summary of the track.",
+  summary: "This is a summary of the file.",
   notes: "Here are some sample notes.",
   lastModified: new Date(2017, 5, 16, 17, 25)
 }]);
@@ -65,7 +65,7 @@ export function reducer(state = initialState, action) {
     case MOVE_TO_TRASH: {
       let newState = state;
       action.ids.map(id =>
-        state.findIndex(track => id === track.get("id"))
+        state.findIndex(file => id === file.get("id"))
       ).forEach(index =>
         newState = newState.setIn([index, "inTrash"], true)
       );

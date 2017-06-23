@@ -14,11 +14,11 @@ export default class Menu extends React.PureComponent {
       isVisible: true,
       path: "/projects/"
     }, {
-      name: "Tracks",
-      hash: "tracks",
-      isActive: this.props.active === "tracks",
+      name: "Files",
+      hash: "files",
+      isActive: this.props.active === "files",
       isVisible: !isProjects,
-      path: "/" + this.props.project + "/tracks"
+      path: "/" + this.props.project + "/files"
     }, {
       name: "Tags",
       hash: "tags",

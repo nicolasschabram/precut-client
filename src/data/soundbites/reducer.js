@@ -2,7 +2,7 @@ import { fromJS } from "immutable"
 
 const initialState = fromJS([{
   id: "ffaf2qr4ff",
-  track: "f3ws2qr4f3",
+  file: "f3ws2qr4f3",
   inpoint: 4500,
   outpoint: 9300,
   name: "Some soundbite X",
@@ -17,7 +17,7 @@ const initialState = fromJS([{
   notes: "Here are some sample notes."
 }, {
   id: "ffff2qa4ff",
-  track: "f3ws2qr4f3",
+  file: "f3ws2qr4f3",
   inpoint: 4500,
   outpoint: 9300,
   name: "Some soundbite Y",
@@ -32,7 +32,7 @@ const initialState = fromJS([{
   notes: "Here are some sample notes."
 }, {
   id: "afff2qr4ff",
-  track: "f3ws2qr4f3",
+  file: "f3ws2qr4f3",
   inpoint: 4500,
   outpoint: 9300,
   name: "Some soundbite Z",

@@ -5,7 +5,7 @@ import "normalize.css";
 import "styles.css";
 
 import Projects from "scenes/Projects";
-import Tracks from "scenes/Tracks";
+import Files from "scenes/Files";
 
 export default class App extends React.Component {
 
@@ -24,12 +24,12 @@ export default class App extends React.Component {
                  component={Projects}
           />
 
-          {["/:project/tracks", "/track/:track"].map(path => (
+          {["/:project/files", "/f/:file"].map(path => (
             <Route exact
                    path={path}
                    key={path}
                    render={ routeProps =>
-                     <Tracks setActiveProject={() => this.setActiveProject}
+                     <Files setActiveProject={() => this.setActiveProject}
                              {...routeProps}
                      />
                    }

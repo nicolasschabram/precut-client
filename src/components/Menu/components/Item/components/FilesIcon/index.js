@@ -2,7 +2,7 @@ import React from "react";
 import Filter from "components/Menu/components/Filter";
 import classNames from "classnames";
 
-export default class TracksIcon extends React.PureComponent {
+export default class FilesIcon extends React.PureComponent {
   render() {
     const svgClass = classNames(
       "menu__icon",

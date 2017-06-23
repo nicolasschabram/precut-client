@@ -10,7 +10,7 @@ import SoundbitePreview from "components/SoundbitePreview";
 
 import "./styles.css";
 
-class Track extends React.PureComponent {
+class File extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,13 +31,13 @@ class Track extends React.PureComponent {
   }
 
   componentDidMount() {
-    document.title = this.props.track.get("name")  + " - Precut";
+    document.title = this.props.file.get("name")  + " - Precut";
   }
 
   render() {
 
     const soundbiteList = () => (
-      <div className="track__soundbites">
+      <div className="file__soundbites">
         <Headline level="h2"
                   text={
                     "Soundbites (" +
@@ -66,16 +66,16 @@ class Track extends React.PureComponent {
 
     return (
       <div className="app">
-        <Menu active="tracks" project={this.props.project.get("id")} />
+        <Menu active="files" project={this.props.project.get("id")} />
         <main style={grid}>
           <HeaderBar back={{
-                       text: "All Tracks",
-                       path: "/" + this.props.track.get("project") + "/tracks"
+                       text: "All Files",
+                       path: "/" + this.props.file.get("project") + "/files"
                      }}
-                     title={this.props.track.get("name")}
+                     title={this.props.file.get("name")}
                      button={{
-                       text: "Edit Track",
-                       onClick: () => console.log("edit track clicked")
+                       text: "Edit File",
+                       onClick: () => console.log("edit file clicked")
                      }}
                      style={{gridArea: "header"}}
           />
@@ -91,18 +91,18 @@ class Track extends React.PureComponent {
 
 function mapStateToProps(state, ownProps) {
   return {
-    track: state.get("tracks").find(
-      track => track.get("id") === ownProps.match.params.track
+    file: state.get("files").find(
+      file => file.get("id") === ownProps.match.params.file
     ),
     project: state.get("projects").find(project =>
-      project.get("id") === state.get("tracks").find(
-        track => track.get("id") === ownProps.match.params.track
+      project.get("id") === state.get("files").find(
+        file => file.get("id") === ownProps.match.params.file
       ).get("project")
     ),
     soundbites: state.get("soundbites").filter(soundbite =>
-      soundbite.get("track") === ownProps.match.params.track
+      soundbite.get("file") === ownProps.match.params.file
     )
   };
 }
 
-export default connect(mapStateToProps)(Track);
+export default connect(mapStateToProps)(File);

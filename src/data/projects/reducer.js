@@ -49,9 +49,7 @@ export function reducer(state = initialState, action) {
     case ADD: {
       return state.push(Map({
         id: Math.random().toString(36).substring(2, 8) + Math.random().toString(36).substring(2, 8),
-        name: action.name,
-        lastModified: Date.now(),
-        tracks: List()
+        name: action.name
       }))
     }
 

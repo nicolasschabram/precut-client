@@ -9,12 +9,12 @@ import TableView from "components/TableView";
 import PencilIcon from "components/Icon/components/Pencil";
 import PreviewPlayer from "components/Player/components/Preview";
 
-import * as trackActions from "data/tracks/actions";
+import * as fileActions from "data/files/actions";
 
-class Tracks extends React.PureComponent {
+class Files extends React.PureComponent {
 
   componentDidMount() {
-    document.title = "Tracks - Precut";
+    document.title = "Files - Precut";
   }
 
   getTableHead() {
@@ -59,55 +59,55 @@ class Tracks extends React.PureComponent {
     ];
   }
 
-  getTableBody(tracks, soundbites) {
-    return tracks.map(function(track) {
+  getTableBody(files, soundbites) {
+    return files.map(function(file) {
       return {
-        id: track.get("id"),
+        id: file.get("id"),
         cells: [{
           id: "name",
           content: (
             <div>
-              <Link to={{ pathname: "/track/" + track.get("id") }}>
-                {track.get("name")}
+              <Link to={{ pathname: "/f/" + file.get("id") }}>
+                {file.get("name")}
               </Link>
               <PencilIcon onClick={() => console.log("pencil icon clicked")} />
             </div>
           ),
-          sortableContent: track.get("name")
+          sortableContent: file.get("name")
         }, {
           id: "soundbites",
           content: soundbites.filter(
-            soundbite => soundbite.get("track") === track.get("id")
+            soundbite => soundbite.get("file") === file.get("id")
           ).count()
         }, {
           id: "duration",
-          content: track.get("duration")
+          content: file.get("duration")
         }, {
           id: "speakers",
-          content: track.get("speakers").map(speaker => speaker.get("name")).join(", ")
+          content: file.get("speakers").map(speaker => speaker.get("name")).join(", ")
         }, {
           id: "reporters",
-          content: track.get("reporters").map(reporter => reporter.get("name")).join(", ")
+          content: file.get("reporters").map(reporter => reporter.get("name")).join(", ")
         }, {
           id: "tags",
-          content: track.get("tags").map(tag => tag.get("name")).join(", ")
+          content: file.get("tags").map(tag => tag.get("name")).join(", ")
         }, {
           id: "rec_date",
           content: (
-            <span title={moment(track.get("recDate")).format("MMMM Do YYYY, h:mm a")}>
-              { moment(track.get("recDate")).format("DD-MM-YYYY") }
+            <span title={moment(file.get("recDate")).format("MMMM Do YYYY, h:mm a")}>
+              { moment(file.get("recDate")).format("DD-MM-YYYY") }
             </span>
           ),
-          sortableContent: track.get("recDate")
+          sortableContent: file.get("recDate")
         }, {
           id: "lastModified",
-          content: moment(track.get("lastModified")).fromNow(),
-          sortableContent: track.get("lastModified")
+          content: moment(file.get("lastModified")).fromNow(),
+          sortableContent: file.get("lastModified")
         }, {
           id: "preview",
           content: (
             <div>
-              <PreviewPlayer src={"/tracks/" + track.get("id") + ".mp3" } id={track.get("id") } />
+              <PreviewPlayer src={"/files/" + file.get("id") + ".mp3" } id={file.get("id") } />
             </div>
           )
         }]
@@ -118,17 +118,17 @@ class Tracks extends React.PureComponent {
   render() {
     const content = () => (
       <TableView location={this.props.location}
-                 items={this.props.tracks}
+                 items={this.props.files}
                  tableHead={this.getTableHead()}
                  tableBody={this.getTableBody(
-                   this.props.tracks.filter(track => !track.get("inTrash")),
+                   this.props.files.filter(file => !file.get("inTrash")),
                    this.props.soundbites
                  )}
                  checkbox={true}
-                 itemType={["Track", "Tracks"]}
-                 moveItemsToTrash={this.props.moveTracksToTrash}
+                 itemType={["File", "Files"]}
+                 moveItemsToTrash={this.props.moveFilesToTrash}
 
-                 modalTitle={"New Track"}
+                 modalTitle={"New File"}
                  modalContent={(
                    <div>
                      TEST
@@ -149,7 +149,7 @@ class Tracks extends React.PureComponent {
     );
     return (
       <div className="app">
-        <Menu active="tracks" project={this.props.match.params.project} />
+        <Menu active="files" project={this.props.match.params.project} />
         <main>
           <Fold content={content} />
         </main>
@@ -160,9 +160,9 @@ class Tracks extends React.PureComponent {
 
 function mapStateToProps(state, ownProps) {
   return {
-    tracks: state.get("tracks").filter(track => track.get("project") === ownProps.match.params.project),
+    files: state.get("files").filter(file => file.get("project") === ownProps.match.params.project),
     soundbites: state.get("soundbites")
   };
 }
 
-export default connect(mapStateToProps, trackActions)(Tracks);
+export default connect(mapStateToProps, fileActions)(Files);

@@ -34,8 +34,8 @@ export default class SoundbitePreview extends React.PureComponent {
 
         </div>
         <div className="soundbite-preview__footer">
-          { this.props.track ? (
-            <p><b>Track:</b> {this.props.track.get("name")}</p>
+          { this.props.file ? (
+            <p><b>File:</b> {this.props.file.get("name")}</p>
           ) : null }
           { this.props.soundbite.get("tags") ? (
             <p>

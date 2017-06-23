@@ -10,8 +10,8 @@ export default class Item extends React.PureComponent {
         iconComponent = require("./components/ProjectsIcon");
         break;
       }
-      case "tracks": {
-        iconComponent = require("./components/TracksIcon");
+      case "files": {
+        iconComponent = require("./components/FilesIcon");
         break;
       }
       case "tags": {

@@ -1,19 +1,19 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Tracks from "./scenes/tracks/";
-import Track from "./scenes/track";
+import Files from "./scenes/files/";
+import File from "./scenes/file";
 
 export default class TracksRouter extends React.PureComponent {
   render() {
     return (
       <Switch>
         <Route exact
-               path="/:project/tracks"
-               component={Tracks}
+               path="/:project/files"
+               component={Files}
         />
         <Route exact
-               path="/track/:track"
-               component={Track}
+               path="/f/:file"
+               component={File}
         />
       </Switch>
     );

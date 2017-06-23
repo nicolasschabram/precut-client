@@ -43,8 +43,8 @@ class Projects extends React.PureComponent {
         textAlign: "left"
       },
       {
-        id: "tracks",
-        title: "Tracks",
+        id: "files",
+        title: "Files",
         textAlign: "right"
       },
       {
@@ -70,7 +70,7 @@ class Projects extends React.PureComponent {
     ];
   }
 
-  getTableBody(projects, tracks) {
+  getTableBody(projects, files) {
     return projects.map(function(project) {
       return {
         id: project.get("id"),
@@ -78,7 +78,7 @@ class Projects extends React.PureComponent {
           id: "name",
           content: (
             <div>
-              <Link to={{ pathname: "/" + project.get("id") + "/tracks" }}>
+              <Link to={{ pathname: "/" + project.get("id") + "/files" }}>
                 {project.get("name")}
               </Link>
               <PencilIcon onClick={() => console.log("pencil icon clicked")} />
@@ -86,8 +86,8 @@ class Projects extends React.PureComponent {
           ),
           sortableContent: project.get("name")
         }, {
-          id: "tracks",
-          content: tracks.filter(track => track.get("project") === project.get("id")).count()
+          id: "files",
+          content: files.filter(file => file.get("project") === project.get("id")).count()
         }, {
           id: "soundbites",
           content: 1
@@ -113,7 +113,7 @@ class Projects extends React.PureComponent {
                  tableHead={this.getTableHead()}
                  tableBody={this.getTableBody(
                    this.props.projects.filter(project => !project.get("inTrash")),
-                   this.props.tracks.filter(track => !track.get("inTrash"))
+                   this.props.files.filter(file => !file.get("inTrash"))
                  )}
                  checkbox={true}
                  itemType={["Project", "Projects"]}
@@ -164,7 +164,7 @@ class Projects extends React.PureComponent {
 function mapStateToProps(state, ownProps) {
   return {
     projects: state.get("projects"),
-    tracks: state.get("tracks")
+    files: state.get("files")
   };
 }
 
