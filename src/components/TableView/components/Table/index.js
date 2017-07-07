@@ -147,14 +147,3 @@ export default class Table extends React.PureComponent {
     )
   }
 }
-
-
-// function mapStateToProps(state) {
-//   return {
-//     selectedItems: state.getIn(["ui", "table_view", "selectedKeys"]),
-//     allSelected: !!state.getIn(["ui", "table_view", "allSelected"]),
-//     sortBy: state.getIn(["ui", "table_view", "sortBy"])
-//   };
-// }
-
-// export default connect(mapStateToProps, tableViewActions)(Table);
