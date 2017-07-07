@@ -9,3 +9,4 @@ This repository contains a frontend prototype. Everything's work in progress but
 
 - run `npm install` to install dependencies
 - run `npm start` to start the development server
+- run `npm run test` to run tests
